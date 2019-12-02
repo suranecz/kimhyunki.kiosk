@@ -4,5 +4,8 @@
 <configuration>
     <typeAliases>     
         <package name="kimhyunki.kiosk.login.domain"/>
+        <package name="kimhyunki.kiosk.menu.domain"/>
+        <package name="kimhyunki.kiosk.order.domain"/>
+        <package name="kimhyunki.kiosk.serving.domain"/>
     </typeAliases>
 </configuration>
