@@ -18,6 +18,11 @@ public class LoginController {
 	@RequestMapping("01")
 	public void login(){}
 	
+	@RequestMapping("02")
+	public String adminPage(){
+		return "login/02";
+	}
+	
 	@RequestMapping("/check")
 	@ResponseBody
 	public boolean idCheck(int password,HttpSession session){
