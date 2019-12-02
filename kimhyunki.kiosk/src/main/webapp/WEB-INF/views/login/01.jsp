@@ -182,7 +182,7 @@ h1 {
 </script>
 <body onload="setKey()">
 	<div class="header">
-		<h1>관리자 로그인 ( password = 1234 )</h1>
+		<h1>관리자 로그인</h1>
 		 <button class = "backbutton"  onClick="location.href='../'">BACK</button>
 	</div>
 	<div class="container">
@@ -203,8 +203,6 @@ h1 {
 				}
 				}
 			%>
-
-			<!--<input type="button" class="keypad" id="clear" value="정정" onclick="clearText()">  -->
 			<input type="button" class="keypad" id="erase" value="↩" onclick="erase()">
 
 		</div>

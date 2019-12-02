@@ -10,4 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/serving")
 public class ServingController {
 	@Autowired private ServingService servingService;
+	
+	@RequestMapping("01")
+	public String order(){
+		return "serving/01";
+	}
+	
+	@RequestMapping("02")
+	public String servingBoard(){
+		return "serving/02";
+	}
 }
