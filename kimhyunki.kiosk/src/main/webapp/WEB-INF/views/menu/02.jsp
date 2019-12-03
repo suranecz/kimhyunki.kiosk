@@ -194,12 +194,13 @@
     
     $(".addbutton").bind("click",function(){
 
-    	var menuImg = $(".menuImg").text();
-    	var menuName = $(".menuName").text();
-    	var menuCategory = $(".menuCategory").text();
-    	var menuPrice = $(".menuPrice").text();
+    	var menuImg = $("h5").text();
+    	var menuName = $(".menuName").val();
+    	var menuCategory = $(".menuCategory").val();
+    	var menuPrice = $(".menuPrice").val();
     	var recommend = $(".recommend_Btn").text();
-
+		
+    	//alert(menuImg+" , "+ menuName+" , "+ menuCategory+" , "+ menuPrice+" , "+ recommend);
     	$.ajax({
     		url: "add",
     		data:{
@@ -236,9 +237,9 @@
     <button class = "backbutton"  onClick="location.href='01'">BACK</button>
     <div class = "imgbox">
       <br><br><br><br>
-      <br><br><br><br><h5>메뉴사진</h5>
+      <br><br><br><br><h5>메뉴사진.png</h5>
     </div>
-    <button class = "addbutton" onClick="location.href='01'">추가</button>
+    <button class = "addbutton">추가</button>
 
     <div class="addimgbutton">
 

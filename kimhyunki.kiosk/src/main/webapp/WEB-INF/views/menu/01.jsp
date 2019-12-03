@@ -210,7 +210,7 @@ function deleteMenu(menuId,menuCategory){
         swal("해당 메뉴가 삭제되었습니다", {
           icon: "success",
         });
-        
+        $("#tableBody").empty();
         $.ajax({
         	method: "get",
         	url:"secede",
