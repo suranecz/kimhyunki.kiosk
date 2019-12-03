@@ -27,5 +27,10 @@ public class MenuDaoImpl implements MenuDao{
 		return menuMapper.setMenu(menu);
 	}
 
+	@Override
+	public int deleteMenu(int menuId) {
+		return menuMapper.deleteMenu(menuId);
+	}
+
 
 }

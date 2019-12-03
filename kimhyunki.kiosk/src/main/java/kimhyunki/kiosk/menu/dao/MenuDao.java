@@ -8,4 +8,5 @@ public interface MenuDao {
 	List<Menu> getMenuList(String menuCategory);
 	Menu getMenu(int menuId);
 	int setMenu(Menu menu);
+	int deleteMenu(int menuId);
 }

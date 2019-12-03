@@ -185,7 +185,7 @@ var list = function(menuCategory){
 						+"<td>"+list[idx].menuPrice+"</td>"
 						+"<td>"+list[idx].menuImg+"</td>"
 						+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='03?menuId="+list[idx].menuId+"'>수정하기</button></td>"
-						+"<td><button class='deletebutton' value="+list[idx].menuId+">삭제하기</button></td>");
+						+"<td><button class='deletebutton' value="+list[idx].menuId+" onclick='deleteMenu("+list[idx].menuId+")'>삭제하기</button></td>");
 			});
 			}
 		},
@@ -194,7 +194,41 @@ var list = function(menuCategory){
 		}
 	});
 }
+function deleteMenu(menuId){
+    swal({
+        title: "해당 메뉴를 삭제하시겠습니까?",
 
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("해당 메뉴가 삭제되었습니다", {
+          icon: "success",
+        });
+        
+        $.ajax({
+        	method: "get",
+        	url:"secede",
+        	data:{
+        		menuId : menuId
+        	},
+        	success:function(){
+        		
+        	},
+        	error:function(a,b,errMsg){
+        		alert("삭제실패함");
+        	}
+        	
+        });
+      } else {
+        swal("메뉴 삭제가 취소되었습니다",{
+          icon: "success",
+        });
+      }
+    });
+}
 var regButtons = function(){
     $(".deletebutton").each(function(){
       $(this).bind("click",function(){

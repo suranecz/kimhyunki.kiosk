@@ -205,9 +205,8 @@
     	var menuName = $(".menuName").val();
     	var menuPrice = $(".menuPrice").val();
     	var recommend = $(".recommend_Btn").text();
-    	
+
     	$.ajax({
-    		method:"get",
     		url: "update",
     		data:{
     			menuId : menuId,
@@ -218,9 +217,10 @@
     		},
     		success:function(){
     			alert("메뉴 수정 완료");
+    			location.href="01";
     		},
     		error:function(a,b,errMsg){
-    			alert("안됨 ㅈ됨");
+    			alert("수정한 내용이 없습니다");
     		}
     		
     	});
@@ -246,7 +246,7 @@
     <div class = "imgbox">
       <br><br><br><br><br>
       <br><br><br><br>
-      <h5><input type="hidden" id="menuImg" value=${menu.menuImg }/>${menu.menuImg }</h5>
+      <h5><input type="hidden" id="menuImg" value="${menu.menuImg }"/>${menu.menuImg}</h5>
     </div>
     <button id="updateBtn" class = "updatebutton">수정</button>
     <!-- <button class = "updatebutton" onClick="location.href='01'">수정</button>-->
@@ -270,7 +270,7 @@
     </tr>
     <tr>
         <td>추천메뉴등록</td>
-        <td><button class="recomend_Btn">${menu.recommend}</button></td>
+        <td><button class="recommend_Btn">${menu.recommend}</button></td>
     </tr>
   </table>
   </div>

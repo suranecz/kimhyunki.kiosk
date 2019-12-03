@@ -27,6 +27,11 @@ public class MenuServiceImpl implements MenuService{
 		return menuDao.setMenu(menu)>0;
 	}
 
+	@Override
+	public boolean secedeMenu(int menuId) {
+		return menuDao.deleteMenu(menuId)>0;
+	}
+
 
 
 }

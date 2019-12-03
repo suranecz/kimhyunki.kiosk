@@ -41,10 +41,16 @@ public class MenuController {
 	}
 	
 	@RequestMapping("/update")
-	public String updateMenu(Menu menuData){
-
+	@ResponseBody
+	public String updateMenu(int menuId, String menuImg, String menuName, int menuPrice, String recommend){
+		Menu menuData = new Menu(menuId, menuName, menuImg, menuPrice, recommend);
 		boolean flag=menuService.updateMenu(menuData);
-		
 		return "menu/01";
+	}
+	
+	@RequestMapping("/secede")
+	@ResponseBody
+	public void secedeMenu(int menuId){
+		boolean flag = menuService.secedeMenu(menuId);
 	}
 }

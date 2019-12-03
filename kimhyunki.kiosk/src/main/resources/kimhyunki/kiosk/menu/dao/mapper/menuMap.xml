@@ -22,4 +22,15 @@
 		from menus
 		where menu_id=#{menuId}
 	</select>
+	
+	<update id="setMenu" parameterType="menu">
+		update menus
+		<set>
+			<if test="menuImg != null">menu_img=#{menuImg},</if>
+			<if test="menuName != null">menu_name=#{menuName},</if>
+			<if test="menuPrice != null">menu_price=#{menuPrice},</if>
+			<if test="recommend != null">recommend=#{recommend},</if>
+		</set>
+		where menu_id=#{menuId}
+	</update>
 </mapper>

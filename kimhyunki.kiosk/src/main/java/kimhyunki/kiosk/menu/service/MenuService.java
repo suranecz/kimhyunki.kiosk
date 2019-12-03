@@ -9,4 +9,5 @@ public interface MenuService {
 	List<Menu> menuList(String menuCategory);
 	Menu getMenu(int menuId);
 	boolean updateMenu(Menu menu);
+	boolean secedeMenu(int menuId);
 }

@@ -8,6 +8,16 @@ public class Menu {
 	private int menuPrice;
 	private String recommend;
 	
+	public Menu(){}
+	
+	public Menu(int menuId, String menuName, String menuImg, int menuPrice, String recommend) {
+		MenuId = menuId;
+		this.menuName = menuName;
+		this.menuImg = menuImg;
+		this.menuPrice = menuPrice;
+		this.recommend = recommend;
+	}
+	
 	public int getMenuId() {
 		return MenuId;
 	}
