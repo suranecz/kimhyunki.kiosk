@@ -50,7 +50,7 @@
       color:white;
     }
     @font-face { font-family: '배달의민족 한나는 열한살 TTF';
-      src: url(../res/font/hannah.ttf) format('truetype');
+      src: url(../font/hannah.ttf) format('truetype');
     }
     .container {
       text-align : center;

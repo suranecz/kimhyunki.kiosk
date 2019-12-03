@@ -4,7 +4,7 @@ public class Menu {
 	private int MenuId;
 	private String menuName;
 	private String menuImg;
-	private String category;
+	private String menuCategory;
 	private int menuPrice;
 	private String recommend;
 	public int getMenuId() {
@@ -26,10 +26,10 @@ public class Menu {
 		this.menuImg = menuImg;
 	}
 	public String getCategory() {
-		return category;
+		return menuCategory;
 	}
 	public void setCategory(String category) {
-		this.category = category;
+		this.menuCategory = category;
 	}
 	public int getMenuPrice() {
 		return menuPrice;
@@ -45,7 +45,7 @@ public class Menu {
 	}
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s %s", MenuId, menuName, menuImg, category, menuPrice, recommend);
+		return String.format("%s %s %s %s %s %s", MenuId, menuName, menuImg, menuCategory, menuPrice, recommend);
 	}
 	
 	

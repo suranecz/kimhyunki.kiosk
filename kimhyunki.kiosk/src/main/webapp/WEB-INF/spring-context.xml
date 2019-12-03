@@ -24,10 +24,10 @@
 		<property name="jndiName" value="java:comp/env/jdbc/kimhyunki" />
 		<property name="resourceRef" value="true" />
 	</bean>
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation"
-			value="classpath:kimhyunki/kiosk/config/sqlMapConfig.xml" />
+		<property name="configLocation" value="classpath:kimhyunki/kiosk/config/sqlMapConfig.xml" />
 		<property name="mapperLocations">
 			<array>
 				<value>classpath:kimhyunki/kiosk/**/dao/mapper/**/*.xml</value>

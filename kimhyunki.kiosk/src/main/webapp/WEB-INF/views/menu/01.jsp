@@ -191,6 +191,23 @@ var regButtons = function(){
       });
       });
     });
+    
+    $(".hamburger").bind("click",function(){
+    	var menuCategory=1;
+    	$.ajax({
+    		method: "get",
+    		url: "menuList",
+			data:{
+				menuCategory: menuCategory
+			},
+    		success:function(){
+    			alert("성공");
+    		},
+    		error:function(a,b,errMsg){
+    			alert("배드리퀘스트");
+    		}
+    	});
+    });
 };
 
 $(document).ready(function(){
@@ -203,8 +220,7 @@ $(document).ready(function(){
   <div class="footer"></div>
   <br>
 <div class="container">
-  <br><br>
-
+  <br><br>${test }
   <br>
     <button class = "backbutton" onClick="location.href='../login/02'">BACK</button>
     <h5>메뉴관리</h5>
@@ -238,6 +254,7 @@ $(document).ready(function(){
       <th>수정</th>
       <th>삭제</th>
     </thead>
+
     <tbody>
       <tr>
         <td>등록</td>

@@ -26,7 +26,7 @@ public class LoginController {
 	@RequestMapping("/check")
 	@ResponseBody
 	public boolean idCheck(int password,HttpSession session){
-		Login login = loginService.idCheck(password);
+		Login login = loginService.idCheck(password);	
 		boolean flag=false;
 		if(login !=null){
 			session.setAttribute("admin", login.getPassword());

@@ -12,27 +12,27 @@ public class OrderController {
 	@Autowired private OrderService orderService;
 
 	@RequestMapping("01")
-	public String place(){
-		return "order/01";
+	public void place(){
+		
 	}
 	
 	@RequestMapping("02")
-	public String mainMenu(){
-		return "order/02";
+	public void mainMenu(){
+
 	}
 	
 	@RequestMapping("03")
-	public String customhamberger(){
-		return "order/03";
+	public void customhamberger(){
+
 	}
 	
 	@RequestMapping("04")
-	public String orderCheck(){
-		return "order/04";
+	public void orderCheck(){
+
 	}
 	
 	@RequestMapping("05")
-	public String payment(){
-		return "order/05";
+	public void payment(){
+
 	}
 }

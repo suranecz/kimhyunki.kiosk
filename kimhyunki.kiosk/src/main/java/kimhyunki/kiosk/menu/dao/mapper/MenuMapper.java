@@ -1,5 +1,10 @@
 package kimhyunki.kiosk.menu.dao.mapper;
 
-public interface MenuMapper {
+import java.util.List;
 
+import kimhyunki.kiosk.menu.domain.Menu;
+
+public interface MenuMapper {
+	List<Menu> getMenuList(String menuCategory);
+	int test();
 }
