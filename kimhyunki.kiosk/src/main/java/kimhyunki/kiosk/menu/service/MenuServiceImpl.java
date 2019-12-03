@@ -32,6 +32,8 @@ public class MenuServiceImpl implements MenuService{
 		return menuDao.deleteMenu(menuId)>0;
 	}
 
-
-
+	@Override
+	public boolean addMenu(Menu menu) {
+		return menuDao.insertMenu(menu)>0;
+	}
 }

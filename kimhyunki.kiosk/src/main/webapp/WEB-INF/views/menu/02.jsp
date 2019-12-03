@@ -111,7 +111,7 @@
       margin-right: auto;
       max-width: initial;
     }
-    .recomend_Btn{
+    .recommend_Btn{
       background-color:rgba(17,65,15,0.8);
       border-radius: 5px;
       font-size: 1.1em;
@@ -120,7 +120,7 @@
       border: 2px solid white;
       color:white;
     }
-    .recomend_Btn:hover{
+    .recommend_Btn:hover{
       background-color: white;
       color: rgba(17,65,15,0.8);
     }
@@ -182,14 +182,44 @@
 </head>
 <script>
   var regButtons=function(){
-    $(".recomend_Btn").bind("click",function(){
-      var check=$(".recomend_Btn").html();
+	  
+    $(".recommend_Btn").bind("click",function(){
+      var check=$(".recommend_Btn").html();
       if(check=='등록'){
-      $(".recomend_Btn").text('미등록');
+      $(".recommend_Btn").text('미등록');
     }else{
-      $(".recomend_Btn").text('등록');
+      $(".recommend_Btn").text('등록');
     }
     });
+    
+    $(".addbutton").bind("click",function(){
+
+    	var menuImg = $(".menuImg").text();
+    	var menuName = $(".menuName").text();
+    	var menuCategory = $(".menuCategory").text();
+    	var menuPrice = $(".menuPrice").text();
+    	var recommend = $(".recommend_Btn").text();
+
+    	$.ajax({
+    		url: "add",
+    		data:{
+    			menuCategory : menuCategory,
+    			menuImg : menuImg,
+    			menuName : menuName,
+    			menuPrice : menuPrice,
+    			recommend : recommend
+    		},
+    		success:function(){
+    			alert("메뉴 등록 완료");
+    			location.href="01";
+    		},
+    		error:function(a,b,errMsg){
+    			alert("입력한 내용이 없습니다");
+    		}
+    		
+    	});
+    })
+    
   };
   $(document).ready(function(){
     regButtons();
@@ -212,7 +242,7 @@
 
     <div class="addimgbutton">
 
-      <input type="file" id="uploadBtn" name="myfile" value="이미지 추가">이미지 추가</input>
+      <input type="file" class="menuImg" id="uploadBtn" name="myfile" value="이미지 추가">이미지 추가</input>
     </div>
   <table>
     <colgroup>
@@ -221,15 +251,19 @@
     </colgroup>
     <tr>
         <th>메뉴이름</th>
-        <th><input class = "menuname" style = "text-align:right;" type="text" placeholder="불고기버거세트" ></th>
+        <th><input class = "menuName" style = "text-align:right;" type="text" required="required"></th>
     </tr>
     <tr>
         <td>가격</td>
-        <td><input class = "menuprice" style = "text-align:right;" type="text" placeholder="4500원" ></td>
+        <td><input class = "menuPrice" style = "text-align:right;" type="text" required="required"></td>
+    </tr>
+    <tr>
+	    <td>카테고리</td>
+	    <td><input class="menuCategory" style = "text-align:right;" type="text" required="required"></td>
     </tr>
     <tr>
         <td>추천메뉴등록</td>
-        <td><button class="recomend_Btn">등록</button></td>
+        <td><button class="recommend_Btn">등록</button></td>
     </tr>
   </table>
 </body>

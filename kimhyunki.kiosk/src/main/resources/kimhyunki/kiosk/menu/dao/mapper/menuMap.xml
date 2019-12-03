@@ -3,6 +3,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kimhyunki.kiosk.menu.dao.mapper.MenuMapper">
 
+	<insert id="insertMenu" parameterType="menu">
+		insert into menus(menu_id,menu_name,menu_img,menu_category,menu_price,recommend)
+		values((select nvl(max(menu_id),0)+1 from menus),#{menuName},#{menuImg},#{menuCategory},#{menuPrice},#{recommend})
+	</insert>
+
 	<select id="getMenuList" parameterType="string" resultMap="getMenuListMap">
 		select *
 		from menus
@@ -33,4 +38,9 @@
 		</set>
 		where menu_id=#{menuId}
 	</update>
+	
+	<delete id="deleteMenu" parameterType="int">
+		delete from menus 
+		where menu_id=#{menuId}
+	</delete>
 </mapper>

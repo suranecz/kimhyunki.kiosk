@@ -9,4 +9,5 @@ public interface MenuMapper {
 	Menu getMenu(int menuId);
 	int setMenu(Menu menu);
 	int deleteMenu(int menuId);
+	int insertMenu(Menu menu);
 }

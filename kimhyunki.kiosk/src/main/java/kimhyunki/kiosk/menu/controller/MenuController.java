@@ -53,4 +53,13 @@ public class MenuController {
 	public void secedeMenu(int menuId){
 		boolean flag = menuService.secedeMenu(menuId);
 	}
+	
+	@RequestMapping("/add")
+	@ResponseBody
+	public String addMenu(String menuImg, String menuCategory ,String menuName, int menuPrice, String recommend){
+		Menu menu = new Menu(menuName, menuImg, menuCategory, menuPrice, recommend);
+		
+		boolean flag = menuService.addMenu(menu);
+		return "menu/01";
+	}
 }

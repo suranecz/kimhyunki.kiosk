@@ -18,6 +18,14 @@ public class Menu {
 		this.recommend = recommend;
 	}
 	
+	public Menu(String menuName, String menuImg, String menuCategory, int menuPrice, String recommend) {
+		this.menuName = menuName;
+		this.menuImg = menuImg;
+		this.menuCategory = menuCategory;
+		this.menuPrice = menuPrice;
+		this.recommend = recommend;
+	}
+
 	public int getMenuId() {
 		return MenuId;
 	}

@@ -179,14 +179,17 @@ var list = function(menuCategory){
 			if($(list).length==0){
 				$("#tableBody").append("<tr><td colspan='6'>메뉴가 존재하지 않습니다</td></tr>")
 			}else{
+				var tableSpace = "";
 			$(list).each(function(idx){
-				$("#tableBody").append("<tr><td>"+list[idx].recommend+"</td>"
-						+"<td>"+list[idx].menuName+"</td>"
-						+"<td>"+list[idx].menuPrice+"</td>"
-						+"<td>"+list[idx].menuImg+"</td>"
-						+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='03?menuId="+list[idx].menuId+"'>수정하기</button></td>"
-						+"<td><button class='deletebutton' value="+list[idx].menuId+" onclick='deleteMenu("+list[idx].menuId+")'>삭제하기</button></td>");
+				tableSpace = tableSpace +"<tr><td>"+list[idx].recommend+"</td>"
+				+"<td>"+list[idx].menuName+"</td>"
+				+"<td>"+list[idx].menuPrice+"</td>"
+				+"<td>"+list[idx].menuImg+"</td>"
+				+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='03?menuId="+list[idx].menuId+"'>수정하기</button></td>"
+				+"<td><button class='deletebutton' value="+list[idx].menuId+" onclick=\"deleteMenu("+list[idx].menuId+",\'"+menuCategory+"\')\">삭제하기</button></td>";
+				
 			});
+			$("#tableBody").html(tableSpace);
 			}
 		},
 		error:function(a,b,errMsg){
@@ -194,7 +197,7 @@ var list = function(menuCategory){
 		}
 	});
 }
-function deleteMenu(menuId){
+function deleteMenu(menuId,menuCategory){
     swal({
         title: "해당 메뉴를 삭제하시겠습니까?",
 
@@ -215,10 +218,11 @@ function deleteMenu(menuId){
         		menuId : menuId
         	},
         	success:function(){
-        		
+       			
+        		list(menuCategory);
         	},
         	error:function(a,b,errMsg){
-        		alert("삭제실패함");
+        		
         	}
         	
         });
