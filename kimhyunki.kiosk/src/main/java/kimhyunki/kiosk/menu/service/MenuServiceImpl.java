@@ -18,8 +18,15 @@ public class MenuServiceImpl implements MenuService{
 	}
 
 	@Override
-	public int test() {
-		return menuDao.test();
+	public Menu getMenu(int menuId) {
+		return menuDao.getMenu(menuId);
 	}
+
+	@Override
+	public boolean updateMenu(Menu menu) {
+		return menuDao.setMenu(menu)>0;
+	}
+
+
 
 }

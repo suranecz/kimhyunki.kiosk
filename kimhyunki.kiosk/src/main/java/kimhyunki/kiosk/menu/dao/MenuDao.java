@@ -6,5 +6,6 @@ import kimhyunki.kiosk.menu.domain.Menu;
 
 public interface MenuDao {
 	List<Menu> getMenuList(String menuCategory);
-	int test();
+	Menu getMenu(int menuId);
+	int setMenu(Menu menu);
 }

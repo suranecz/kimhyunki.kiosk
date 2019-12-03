@@ -7,6 +7,7 @@ public class Menu {
 	private String menuCategory;
 	private int menuPrice;
 	private String recommend;
+	
 	public int getMenuId() {
 		return MenuId;
 	}

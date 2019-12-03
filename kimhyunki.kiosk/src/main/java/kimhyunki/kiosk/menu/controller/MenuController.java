@@ -18,28 +18,33 @@ public class MenuController {
 	@Autowired private MenuService menuService;
 	
 	@RequestMapping("/01")
-	@ModelAttribute("test")
-	public int menuManagement(){
-		
-		return menuService.test();
+	public void menuManagement(){
+
 	}
 	
 	@RequestMapping("/menuList")
 	@ResponseBody
 	public List<Menu> menuList(String menuCategory){
-		System.out.println("실행됨");
 		return menuService.menuList(menuCategory);
 	}
 	
-	
-	
 	@RequestMapping("/02")
 	public void addMenu(){
-
+		
 	}
 	
-	@RequestMapping("03")
-	public void updateMenu(){
+	@RequestMapping("/03")
+	public Menu getMenu(int menuId){
+		Menu menu = new Menu();
+		menu = menuService.getMenu(menuId);
+		return menu;
+	}
+	
+	@RequestMapping("/update")
+	public String updateMenu(Menu menuData){
 
+		boolean flag=menuService.updateMenu(menuData);
+		
+		return "menu/01";
 	}
 }

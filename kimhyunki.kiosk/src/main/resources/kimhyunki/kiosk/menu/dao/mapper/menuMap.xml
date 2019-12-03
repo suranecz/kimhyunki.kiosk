@@ -17,7 +17,9 @@
 		<result column="recommend" property="recommend" />
 	</resultMap>
 	
-	<select id="test" resultType="int">
-		select menu_id from menus where menu_price=1800
+	<select id="getMenu" parameterType="int" resultMap="getMenuListMap">
+		select *
+		from menus
+		where menu_id=#{menuId}
 	</select>
 </mapper>

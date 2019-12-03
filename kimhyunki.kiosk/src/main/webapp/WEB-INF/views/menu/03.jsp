@@ -132,7 +132,7 @@
         .btn{
           font-size: 1em;
         }
-        .recomend_Btn{
+        .recommend_Btn{
           background-color:rgba(17,65,15,0.8);
           border-radius: 5px;
           font-size: 1.1em;
@@ -141,7 +141,7 @@
           border: 2px solid white;
           color:white;
         }
-        .recomend_Btn:hover{
+        .recommend_Btn:hover{
           background-color: white;
 	        color: rgba(17,65,15,0.8);
         }
@@ -189,34 +189,67 @@
 </head>
 <script>
   var regButtons=function(){
-    $(".recomend_Btn").bind("click",function(){
-      var check=$(".recomend_Btn").html();
+    $(".recommend_Btn").bind("click",function(){
+      var check=$(".recommend_Btn").html();
 
       if(check=='등록'){
-      $(".recomend_Btn").text('미등록');
+      $(".recommend_Btn").text('미등록');
     }else{
-      $(".recomend_Btn").text('등록');
+      $(".recommend_Btn").text('등록');
     }
     });
+    
+    $("#updateBtn").bind("click",function(){
+    	var menuId = $("#menuId").val();
+    	var menuImg = $("#menuImg").val();
+    	var menuName = $(".menuName").val();
+    	var menuPrice = $(".menuPrice").val();
+    	var recommend = $(".recommend_Btn").text();
+    	
+    	$.ajax({
+    		method:"get",
+    		url: "update",
+    		data:{
+    			menuId : menuId,
+    			menuImg : menuImg,
+    			menuName : menuName,
+    			menuPrice : menuPrice,
+    			recommend : recommend
+    		},
+    		success:function(){
+    			alert("메뉴 수정 완료");
+    		},
+    		error:function(a,b,errMsg){
+    			alert("안됨 ㅈ됨");
+    		}
+    		
+    	});
+    	
+    });
+    
   };
   $(document).ready(function(){
     regButtons();
   });
+  
+
 </script>
 <body>
   <div class="header"><marquee class="ad_text" width="100%">광고 텍스트 영역</marquee></div>
 <div class="footer"></div>
-  <br>
+  <br><input id="menuId" type="hidden" value="${menu.menuId }"/>
 <div class="container">
   <br><br>
     <h2 font-style = "배달의민족 을지로체 TTF">메뉴수정</h2>
   <br>
-    <button class = "backbutton"  onClick="location.href='01.html'">BACK</button>
+    <button class = "backbutton"  onClick="location.href='01'">BACK</button>
     <div class = "imgbox">
       <br><br><br><br><br>
-      <br><br><br><br><h5>메뉴사진</h5>
+      <br><br><br><br>
+      <h5><input type="hidden" id="menuImg" value=${menu.menuImg }/>${menu.menuImg }</h5>
     </div>
-    <button class = "updatebutton" onClick="location.href='01.html'">수정</button>
+    <button id="updateBtn" class = "updatebutton">수정</button>
+    <!-- <button class = "updatebutton" onClick="location.href='01'">수정</button>-->
 
     <div class="updateimgbutton">
       <button class="btn">이미지추가</button>
@@ -229,17 +262,18 @@
     </colgroup>
     <tr>
         <th>메뉴이름</th>
-        <th><input class = "menuname" style = "text-align:right;" type="text" placeholder="불고기버거세트" ></th>
+        <th><input class="menuName" style="text-align:right;" name="menuName" type="text" placeholder="${menu.menuName }"></th>
     </tr>
     <tr>
         <td>가격</td>
-        <td><input class = "menuprice" style = "text-align:right;" type="text" placeholder="4500원" ></td>
+        <td><input class="menuPrice" style="text-align:right;" name="menuPrice" type="text" placeholder="${menu.menuPrice }" ></td>
     </tr>
     <tr>
         <td>추천메뉴등록</td>
-        <td><button class="recomend_Btn">등록</button></td>
+        <td><button class="recomend_Btn">${menu.recommend}</button></td>
     </tr>
   </table>
+  </div>
 </body>
 </html>
 

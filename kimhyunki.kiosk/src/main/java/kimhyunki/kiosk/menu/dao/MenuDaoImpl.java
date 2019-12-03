@@ -18,7 +18,14 @@ public class MenuDaoImpl implements MenuDao{
 	}
 
 	@Override
-	public int test() {
-		return menuMapper.test();
+	public Menu getMenu(int menuId) {
+		return menuMapper.getMenu(menuId);
 	}
+
+	@Override
+	public int setMenu(Menu menu) {
+		return menuMapper.setMenu(menu);
+	}
+
+
 }

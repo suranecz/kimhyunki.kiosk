@@ -15,7 +15,7 @@
 <style>
     body{
       margin : 0;
-      overflow: auto;
+
     }
     .footer {
       position: fixed;
@@ -44,15 +44,16 @@
       background-color: rgba( 255, 255, 255, 0.5 );
     }
     .addbutton{ /* 추가하기 버튼 */
-      background-color:rgba(17,65,15,0.8);
-    	border-radius: 5px;
-    	font-size: 2.3em;
-    	width:150px;
-    	margin-right: 20px;
-    	border: 2px solid white;
-      color: white;
-      width:200px;
-      margin-top: 130px;
+	    background-color:rgba(17,65,15,0.8);
+	    order-radius: 5px;
+	    font-size: 2.3em;
+	    width:150px;
+	    margin-right: 20px;
+	    border: 2px solid white;
+	    color: white;
+	    width:200px;
+	    margin-top: 50px;
+	    margin-bottom: 50px;
     }
     .addbutton:hover{
       background-color: white;
@@ -116,9 +117,11 @@
       margin-left: auto;
       margin-right: auto;
       max-width: initial;
+      overflow: auto;
     }
     .table_container{
       margin-top: 30px;
+      
     }
     @font-face { font-family: '배달의민족 한나는 열한살 TTF';
       src: url(../font/hannah.ttf) format('truetype');
@@ -152,7 +155,7 @@
       margin-left:-6px;
     }
     .custom{
-border-radius: 0px 25px 25px 0px;
+	border-radius: 0px 25px 25px 0px;
     }
     .menubutton,.orderbutton,.statusbutton{
       border-radius: 10px;
@@ -165,7 +168,32 @@ border-radius: 0px 25px 25px 0px;
 }
 </style>
 <script>
-
+var list = function(menuCategory){
+	$.ajax({
+		method: "get",
+		url: "menuList",
+		data:{
+			menuCategory: menuCategory
+		},
+		success:function(list){
+			if($(list).length==0){
+				$("#tableBody").append("<tr><td colspan='6'>메뉴가 존재하지 않습니다</td></tr>")
+			}else{
+			$(list).each(function(idx){
+				$("#tableBody").append("<tr><td>"+list[idx].recommend+"</td>"
+						+"<td>"+list[idx].menuName+"</td>"
+						+"<td>"+list[idx].menuPrice+"</td>"
+						+"<td>"+list[idx].menuImg+"</td>"
+						+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='03?menuId="+list[idx].menuId+"'>수정하기</button></td>"
+						+"<td><button class='deletebutton' value="+list[idx].menuId+">삭제하기</button></td>");
+			});
+			}
+		},
+		error:function(a,b,errMsg){
+			alert("배드리퀘스트");
+		}
+	});
+}
 
 var regButtons = function(){
     $(".deletebutton").each(function(){
@@ -193,20 +221,27 @@ var regButtons = function(){
     });
     
     $(".hamburger").bind("click",function(){
-    	var menuCategory=1;
-    	$.ajax({
-    		method: "get",
-    		url: "menuList",
-			data:{
-				menuCategory: menuCategory
-			},
-    		success:function(){
-    			alert("성공");
-    		},
-    		error:function(a,b,errMsg){
-    			alert("배드리퀘스트");
-    		}
-    	});
+    	var menuCategory="햄버거";
+    	$("#tableBody").empty();
+    	list(menuCategory);
+    });
+    
+    $(".side").bind("click",function(){
+    	var menuCategory="사이드";
+    	$("#tableBody").empty();
+		list(menuCategory);
+    });
+    
+    $(".beverage").bind("click",function(){
+    	var menuCategory="음료";
+    	$("#tableBody").empty();
+    	list(menuCategory);
+    });
+    
+    $(".custom").bind("click",function(){
+    	var menuCategory="재료";
+    	$("#tableBody").empty();
+    	list(menuCategory);
     });
 };
 
@@ -220,7 +255,7 @@ $(document).ready(function(){
   <div class="footer"></div>
   <br>
 <div class="container">
-  <br><br>${test }
+  <br><br>
   <br>
     <button class = "backbutton" onClick="location.href='../login/02'">BACK</button>
     <h5>메뉴관리</h5>
@@ -255,43 +290,15 @@ $(document).ready(function(){
       <th>삭제</th>
     </thead>
 
-    <tbody>
-      <tr>
-        <td>등록</td>
-        <td>오징어버거</td>
-        <td>4,500원 </td>
-        <td>상품 이미지</td>
-        <td><button class = "updatebutton" onClick="location.href='03'">수정하기</button></td>
-        <td><button class = "deletebutton">삭제하기</button></td>
-      </tr>
-      <tr>
-        <td>미등록</td>
-        <td>불고기버거</td>
-        <td>3,200원 </td>
-        <td>상품 이미지</td>
-        <td><button class = "updatebutton" onClick="location.href='03'">수정하기</button></td>
-        <td><button class = "deletebutton">삭제하기</button></td>
-      </tr>
-      <tr>
-        <td>미등록</td>
-        <td>AZ버거</td>
-        <td>4,200원 </td>
-        <td>상품 이미지</td>
-        <td><button class = "updatebutton" onClick="location.href='03'">수정하기</button></td>
-        <td><button class = "deletebutton">삭제하기</button></td>
-      </tr>
-      <tr>
-        <td>등록</td>
-        <td>오징어버거</td>
-        <td>4,500원 </td>
-        <td>상품 이미지</td>
-        <td><button class = "updatebutton" onClick="location.href='03'">수정하기</button></td>
-        <td><button class = "deletebutton">삭제하기</button></td>
-      </tr>
+    <tbody id="tableBody">
+	<tr>
+	<td colspan="6" style="height: 200px;">목록 조회를 위해 카테고리를 선택해 주세요</td>
+	</tr>
     </tbody>
   </table>
   </div>
   <button class = "addbutton" onClick="location.href='02'">메뉴 추가</button>
+  <br>
   </div>
 </body>
 </html>

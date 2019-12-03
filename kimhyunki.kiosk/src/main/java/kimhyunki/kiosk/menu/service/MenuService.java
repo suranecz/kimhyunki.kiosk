@@ -7,5 +7,6 @@ import kimhyunki.kiosk.menu.domain.Menu;
 
 public interface MenuService {
 	List<Menu> menuList(String menuCategory);
-	int test();
+	Menu getMenu(int menuId);
+	boolean updateMenu(Menu menu);
 }
