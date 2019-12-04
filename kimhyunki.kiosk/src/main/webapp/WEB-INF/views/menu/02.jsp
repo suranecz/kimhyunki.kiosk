@@ -199,7 +199,10 @@
     	var menuCategory = $(".menuCategory").val();
     	var menuPrice = $(".menuPrice").val();
     	var recommend = $(".recommend_Btn").text();
-		
+    	if((menuImg=='')||(menuName=='')||(menuCategory=='')||(menuPrice=='')){
+    		alert("모든 값을 입력해주세요");
+    	}
+    	else{
     	//alert(menuImg+" , "+ menuName+" , "+ menuCategory+" , "+ menuPrice+" , "+ recommend);
     	$.ajax({
     		url: "add",
@@ -219,6 +222,7 @@
     		}
     		
     	});
+    	}
     })
     
   };
@@ -256,7 +260,7 @@
     </tr>
     <tr>
         <td>가격</td>
-        <td><input class = "menuPrice" style = "text-align:right;" type="text" required="required"></td>
+        <td><input class = "menuPrice" style = "text-align:right;" type="number" required="required"></td>
     </tr>
     <tr>
 	    <td>카테고리</td>

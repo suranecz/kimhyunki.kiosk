@@ -376,7 +376,7 @@ h1{
 </style>
 </head>
 <script>
-
+var maxPoint=0;
 var alert = function(msg, type){
     swal({
         title:'',
@@ -435,9 +435,40 @@ var regButtons=function(){
   });
 
   $("#pointSearchBtn").bind("click",function(){
-    $(".point_content").css('display','none');
-    $(".regist_form").css('display','block');
-    clearText();
+	  var phoneNo = $("#hiddenarea").text();
+	  if(checkPhoneNo()){
+		  $.ajax({
+			url:"../user/findUser",
+			data:{
+				phoneNo : phoneNo
+			},
+		  	success:function(user){
+		  		maxPoint = user.point;
+		  		//조회실패 핸드폰번호입력
+		  		$(".regist_content").html(user.phoneNo);
+		  		
+		  		//포인트사용페이지 입력
+		  		$("#oriPoint").html(user.point);
+		  		$("#searchPhoneNo").val(user.phoneNo);
+		  		$("#usablePoint").html(user.point);
+		  	    $(".point_content").css('display','none');
+		  	    $(".regist_form").css('display','block');
+		  	    clearText();
+		  	},
+		  	error:function(a,b,errMsg){
+		  		alert('조회실패함','warning');
+		  	}
+			  
+		  });
+		  
+		  
+	  }else{
+		  alert('핸드폰번호를 확인해주세요','warning');
+	  }
+	 
+    //$(".point_content").css('display','none');
+    //$(".regist_form").css('display','block');
+    //clearText();
   });
 
 	$(".regist_cancle").bind("click",function(){
@@ -478,7 +509,7 @@ var regButtons=function(){
       var point = $("#usablePoint").html().replace(",","");
       point=point*1;
 
-      if(point+500>4200){
+      if(point+500>maxPoint){
         alert("잔여 포인트를 초과하였습니다",'warning');
       }else{
         point=point+500;
@@ -498,14 +529,22 @@ var regButtons=function(){
   });
 
   $("#paymentBtn").bind("click",function(){
-    $(".point_container").css('display','none');
+	  var oriPoint = $("#oriPoint").html();
+	  var usablePoint = $("#usablePoint").html();
+	  var totalPoint = oriPoint - usablePoint;
+	  var hiddenPhoneNo =  $("#searchPhoneNo").html();
+	  alert(totalPoint);
+	  alert(hiddenPhoneNo);
+   // $(".point_container").css('display','none');
   });
+  
+  
 };
 
 $(document).ready(function(){
 	regButtons();
 });
-
+var originNo="";
 var temp = "";
 var clear ="";
 
@@ -529,9 +568,19 @@ function clearText(){
   var textarea = document.getElementById("textarea");
   var hiddenarea = document.getElementById("hiddenarea");
 
+  originNo="";
   temp="";
   textarea.innerHTML = clear;
   hiddenarea.innerHTML = clear;
+}
+
+function checkPhoneNo(){
+	var checkNo = $("#hiddenarea").text();
+	var flag = false;
+	if(checkNo.length==11){
+		flag =true;
+	}
+	return flag;
 }
 
 function inputNum(text) {
@@ -543,18 +592,21 @@ function inputNum(text) {
   else if(temp.length==3){
     temp= temp+"-";
     temp = temp + text;
-    textarea.innerHTML=temp;
-    hiddenarea.innerHTML = temp;
+    originNo = originNo + text;
+    textarea.innerHTML = temp;
+    hiddenarea.innerHTML = originNo;
   }
   else if(temp.length==8){
     temp= temp+"-";
     temp = temp + text;
+    originNo = originNo + text;
     textarea.innerHTML=temp;
-    hiddenarea.innerHTML = temp;
+    hiddenarea.innerHTML = originNo;
   }else{
     temp = temp + text;
+    originNo = originNo + text;
     textarea.innerHTML=temp;
-    hiddenarea.innerHTML = temp;
+    hiddenarea.innerHTML = originNo;
   }
 }
 
@@ -633,10 +685,10 @@ function inputNum(text) {
     <div class="point_result">
     <div class="point_result_header">포인트 조회</div>
     <div class="point_result_content">
-
-      잔여 포인트 : 4,200p<br><br>
+<input type="hidden" id="searchPhoneNo">
+      잔여 포인트 : <span id="oriPoint"></span>p<br><br>
       주문 금액 : <span id="totalPrice">23,000</span>원<br><br>
-      사용 포인트: <span id="usablePoint">4,200</span>p<br><br>
+      사용 포인트: <span id="usablePoint"></span>p<br><br>
       <input id="delPoint" class="point_result_content_btn" type="button" value="-500p">
       &nbsp;
       <input id="addPoint" class="point_result_content_btn" type="button" value="+500p"><br><br>
@@ -652,7 +704,7 @@ function inputNum(text) {
 	<!-- regist_form 시작-->
 	<div class="regist_form">
 		<div class="regist_header">회원 조회 실패</div>
-		<div class="regist_content">010-1234-5678</div>
+		<div class="regist_content"></div>
 		<div class="regist_question">해당 번호로 가입하시겠습니까?</div>
 		<div class="regist_point">※ 결제 금액의 10%가 적립됩니다 ※</div>
 		<div class="regist_btn">

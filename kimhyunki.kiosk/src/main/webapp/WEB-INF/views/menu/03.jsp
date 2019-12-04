@@ -273,7 +273,7 @@
     </tr>
     <tr>
         <td>가격</td>
-        <td><input class="menuPrice" style="text-align:right;" name="menuPrice" type="text" placeholder="${menu.menuPrice }" ></td>
+        <td><input class="menuPrice" style="text-align:right;" name="menuPrice" type="number" placeholder="${menu.menuPrice }" ></td>
     </tr>
     <tr>
         <td>추천메뉴등록</td>
