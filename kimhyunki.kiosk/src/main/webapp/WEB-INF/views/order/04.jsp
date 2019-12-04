@@ -377,6 +377,7 @@ h1{
 </head>
 <script>
 var maxPoint=0;
+var usePoint=0;
 var alert = function(msg, type){
     swal({
         title:'',
@@ -435,22 +436,27 @@ var regButtons=function(){
   });
 
   $("#pointSearchBtn").bind("click",function(){
-	  var phoneNo = $("#hiddenarea").text();
+	  var phoneNum = $("#hiddenarea").text();
 	  if(checkPhoneNo()){
 		  $.ajax({
 			url:"../user/findUser",
 			data:{
-				phoneNo : phoneNo
+				phoneNo : phoneNum
 			},
 		  	success:function(user){
 		  		maxPoint = user.point;
 		  		//조회실패 핸드폰번호입력
 		  		$(".regist_content").html(user.phoneNo);
-		  		
+		  		usePoint=user.point;
+		        var strUsePoint=""+usePoint;
+		        var pointLeng = strUsePoint.length;
+		        if(pointLeng>3){
+		        	strUsePoint = strUsePoint.substring(0,pointLeng-3)+','+strUsePoint.substring(pointLeng-3,pointLeng);
+		        }
 		  		//포인트사용페이지 입력
-		  		$("#oriPoint").html(user.point);
-		  		$("#searchPhoneNo").val(user.phoneNo);
-		  		$("#usablePoint").html(user.point);
+		  		$("#oriPoint").html(strUsePoint);
+		  		$("#searchPhoneNo").html(user.phoneNo);
+		  		$("#usablePoint").html(strUsePoint);
 		  	    $(".point_content").css('display','none');
 		  	    $(".regist_form").css('display','block');
 		  	    clearText();
@@ -494,14 +500,17 @@ var regButtons=function(){
         alert("포인트 최소한도입니다",'warning');
       }else{
       point=point-500;
+      usePoint = point;
       }
       var strPoint=""+point;
       var leng = strPoint.length;
       if(leng>3){
       strPoint = strPoint.substring(0,leng-3)+','+strPoint.substring(leng-3,leng);
       $("#usablePoint").html(strPoint);
+      $("#hiddenusePoint").html(usePoint);
     }else{
       $("#usablePoint").html(strPoint);
+      $("#hiddenusePoint").html(usePoint);
     }
   });
 
@@ -513,14 +522,18 @@ var regButtons=function(){
         alert("잔여 포인트를 초과하였습니다",'warning');
       }else{
         point=point+500;
+        usePoint=point;
       }
       var strPoint=""+point;
       if(strPoint.length>3){
       var leng = strPoint.length;
       strPoint = strPoint.substring(0,leng-3)+','+strPoint.substring(leng-3,leng);
       $("#usablePoint").html(strPoint);
+      $("#hiddenusePoint").html(usePoint);
     }else{
       $("#usablePoint").html(strPoint);
+      $("#hiddenusePoint").html(usePoint);
+
     }
   });
 
@@ -529,12 +542,11 @@ var regButtons=function(){
   });
 
   $("#paymentBtn").bind("click",function(){
-	  var oriPoint = $("#oriPoint").html();
-	  var usablePoint = $("#usablePoint").html();
-	  var totalPoint = oriPoint - usablePoint;
-	  var hiddenPhoneNo =  $("#searchPhoneNo").html();
-	  alert(totalPoint);
-	  alert(hiddenPhoneNo);
+	  var oriPoint = $("#oriPoint").text();
+	  var totalPoint = oriPoint - usePoint;
+	  var hiddenPhoneNo = $("#searchPhoneNo").text();
+	  alert(hiddenPhoneNo+','+totalPoint);
+	 
    // $(".point_container").css('display','none');
   });
   
@@ -692,7 +704,7 @@ function inputNum(text) {
       <input id="delPoint" class="point_result_content_btn" type="button" value="-500p">
       &nbsp;
       <input id="addPoint" class="point_result_content_btn" type="button" value="+500p"><br><br>
-    <br>
+    <br><input id="hiddenusePoint" type="hidden">
       ※포인트 사용 최소단위는 500p 입니다※<br>
     </div>
     <div class="point_result_footer">
