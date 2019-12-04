@@ -201,9 +201,16 @@
     
     $("#updateBtn").bind("click",function(){
     	var menuId = $("#menuId").val();
+    	
     	var menuImg = $("#menuImg").val();
     	var menuName = $(".menuName").val();
+    	if(menuName==''){
+    		menuName='noName';
+    	}
     	var menuPrice = $(".menuPrice").val();
+    	if(menuPrice==''){
+    		menuPrice=-1;
+    	}
     	var recommend = $(".recommend_Btn").text();
 
     	$.ajax({

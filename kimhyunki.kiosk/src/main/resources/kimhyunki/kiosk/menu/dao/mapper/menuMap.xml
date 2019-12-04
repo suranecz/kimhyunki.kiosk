@@ -32,8 +32,8 @@
 		update menus
 		<set>
 			<if test="menuImg != null">menu_img=#{menuImg},</if>
-			<if test="menuName != null">menu_name=#{menuName},</if>
-			<if test="menuPrice != null">menu_price=#{menuPrice},</if>
+			<if test="menuName != 'noName'">menu_name=#{menuName},</if>
+			<if test="menuPrice != -1">menu_price=#{menuPrice},</if>
 			<if test="recommend != null">recommend=#{recommend},</if>
 		</set>
 		where menu_id=#{menuId}
