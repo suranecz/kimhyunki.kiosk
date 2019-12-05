@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html lang="en">
 
@@ -149,15 +150,14 @@
         <div class="readyText">준비중입니다</div>
     </div>
     <div class="completeBox">
-      0012<br>
-      0015<br>
-
+      <c:forEach var="ing" items="${preparingList}">
+        <p>${ing.orderNo}</p>
+      </c:forEach>
     </div>
     <div class="readyBox">
-      0016<br>
-      0017<br>
-      0018<br>
-      0019<br>
+      <c:forEach var="ed" items="${preparedList}">
+        <p>${ed.orderNo}</p>
+      </c:forEach>
     </div>
   </div>
 

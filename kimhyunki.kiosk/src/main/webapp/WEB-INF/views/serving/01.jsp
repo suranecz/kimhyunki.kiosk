@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,7 +108,6 @@
       height: 790px;
       margin-left: auto;
       margin-right: auto;
-      max-width: initial;
     }
     @font-face { font-family: '배달의민족 한나는 열한살 TTF';
       src: url(../font/hannah.ttf) format('truetype');
@@ -153,13 +150,10 @@
     .status_Btn{
       width:120px;
     }
-
 </style>
 </head>
 <script>
-
 var regButtons = function(){
-
     $(".status_Btn").each(function(){
       $(this).bind("click",function(){
         var check = $(this).html();
@@ -175,8 +169,9 @@ var regButtons = function(){
 };
 
 $(document).ready(function(){
-  regButtons();
+     regButtons();
 });
+
 </script>
 <body>
   <div class="header"><marquee class="ad_text" width="100%">광고성 메세지</marquee></div>
@@ -184,7 +179,6 @@ $(document).ready(function(){
   <br>
 <div class="container">
   <br><br>
-
   <br>
     <button class = "backbutton" onClick="location.href='../login/02'">BACK</button>
     <h5>주문관리</h5>
@@ -194,7 +188,6 @@ $(document).ready(function(){
      <button class = "orderbutton" onClick="location.href='#'">주문관리</button>
      <button class = "statusbutton" onClick="location.href='02'">주문현황</button>
   <br><br>
-
 <div>
   <table>
     <colgroup>
@@ -208,26 +201,13 @@ $(document).ready(function(){
       <th>준비상태</th>
     </thead>
     <tbody>
+     <c:forEach var="list" items="${orderList}">
       <tr>
-        <td>0010</td>
-        <td>치즈버거, 콜라(L),감자튀김</td>
-        <td><button class="status_Btn">주문완료</button></td>
+        <td>${list.orderNo}</td>
+        <td>🍔</td>
+        <td><button class="status_Btn" value="${list.orderStatus}">${list.orderStatus}</button></td>
       </tr>
-      <tr>
-        <td>0011</td>
-        <td>불고기버거</td>
-        <td><button class="status_Btn">준비완료</button></td>
-      </tr>
-      <tr>
-        <td>0012</td>
-        <td>커스텀햄버거(상추,소고기패티,망네즈,양파,치즈,치즈,토마토), 콜라(L)</td>
-        <td><button class="status_Btn">준비중</button></td>
-      </tr>
-      <tr>
-        <td>0013</td>
-        <td>치즈볼,감자튀김,콜라(R)</td>
-        <td><button class="status_Btn">준비중</button></td>
-      </tr>
+     </c:forEach>
     </tbody>
   </table>
   </div>

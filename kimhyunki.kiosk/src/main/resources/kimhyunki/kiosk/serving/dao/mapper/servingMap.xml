@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="kimhyunki.kiosk.serving.dao.mapper.ServingMapper">
-
-
+   <select id = "preparing" parameterType = "int" resultType = "order">
+      select order_no orderNo
+      from orders
+      where order_status = '준비중'
+      <![CDATA[ AND ROWNUM <= 4 ]]>
+   </select>
+   
+   <select id = "prepared" parameterType = "int" resultType = "order">
+      select order_no orderNo
+      from orders
+      where order_status = '준비완료'
+      <![CDATA[ AND ROWNUM <= 4 ]]>
+   </select>
+   
+   <select id = "orderList" parameterType = "int" resultType = "order" >
+      select order_no orderNo, order_status orderStatus
+      from orders 
+   </select>
+   
+   <update id = "updateStatus" parameterType = "string">
+      update orders
+      set order_status = #{orderStatus, jdbcType=VARCHAR}
+   </update>
 </mapper>

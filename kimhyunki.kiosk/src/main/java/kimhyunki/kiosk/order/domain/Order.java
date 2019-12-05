@@ -4,6 +4,7 @@ public class Order {
 	private int orderNo;
 	private String place;
 	private String orderStatus;
+	
 	public int getOrderNo() {
 		return orderNo;
 	}
