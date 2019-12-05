@@ -136,12 +136,12 @@
   <br>
 <div class="container">
 
-  <button class = "adminbutton"  onClick="location.href='../login/02'">BACK</button>
+  <button class = "adminbutton"  onClick="location.href='../login/adminMenu'">BACK</button>
     <br><br><h5>주문현황</h5>
   <br>
 
-    <button class = "menubutton" onClick="location.href='../menu/01'">메뉴관리</button>
-    <button class = "orderbutton" onClick="location.href='01'">주문관리</button>
+    <button class = "menubutton" onClick="location.href='../menu/menuManage'">메뉴관리</button>
+    <button class = "orderbutton" onClick="location.href='orderManage'">주문관리</button>
     <button class = "statusbutton" onClick="location.href='#'">주문현황</button>
   <br><br>
   <div class="mainBox">

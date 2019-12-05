@@ -215,7 +215,7 @@
     		},
     		success:function(){
     			alert("메뉴 등록 완료");
-    			location.href="01";
+    			location.href="menuManage";
     		},
     		error:function(a,b,errMsg){
     			alert("입력한 내용이 없습니다");
@@ -238,7 +238,7 @@
   <br><br>
     <h2 font-style = "배달의민족 을지로체 TTF">메뉴추가</h2>
   <br>
-    <button class = "backbutton"  onClick="location.href='01'">BACK</button>
+    <button class = "backbutton"  onClick="location.href='menuManage'">BACK</button>
     <div class = "imgbox">
       <br><br><br><br>
       <br><br><br><br><h5>메뉴사진.png</h5>

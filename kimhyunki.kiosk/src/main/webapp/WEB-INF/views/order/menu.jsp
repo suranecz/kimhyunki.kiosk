@@ -222,7 +222,7 @@ var regButtons=function(){
 				$(this).addClass("selected");
 				$(this).siblings().removeClass("selected");
         if($("#list4").hasClass("selected")===true){
-          location.href="03";
+          location.href="custom";
         }
 
 	});
@@ -293,7 +293,7 @@ $(document).ready(function(){
        
       </div>
       <div class="button-area">
-        <div class="btn" onclick="location.href='../'">주문 취소</div><div class="btn" onclick="location.href='04'">주문하기</div>
+        <div class="btn" onclick="location.href='../'">주문 취소</div><div class="btn" onclick="location.href='checkOrder'">주문하기</div>
       </div>
     </div>
   </div>

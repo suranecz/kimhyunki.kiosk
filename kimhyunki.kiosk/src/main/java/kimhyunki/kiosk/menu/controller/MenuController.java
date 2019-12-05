@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MenuController {
 	@Autowired private MenuService menuService;
 	
-	@RequestMapping("/01")
+	@RequestMapping("/menuManage")
 	public void menuManagement(){
 
 	}
@@ -28,12 +28,12 @@ public class MenuController {
 		return menuService.menuList(menuCategory);
 	}
 	
-	@RequestMapping("/02")
+	@RequestMapping("/addMenu")
 	public void addMenu(){
 		
 	}
 	
-	@RequestMapping("/03")
+	@RequestMapping("/correctMenu")
 	public Menu getMenu(int menuId){
 		Menu menu = new Menu();
 		menu = menuService.getMenu(menuId);
@@ -45,7 +45,7 @@ public class MenuController {
 	public String updateMenu(int menuId, String menuImg, String menuName, int menuPrice, String recommend){
 		Menu menuData = new Menu(menuId, menuName, menuImg, menuPrice, recommend);
 		boolean flag=menuService.updateMenu(menuData);
-		return "menu/01";
+		return "menu/menuManage";
 	}
 	
 	@RequestMapping("/secede")
@@ -60,6 +60,6 @@ public class MenuController {
 		Menu menu = new Menu(menuName, menuImg, menuCategory, menuPrice, recommend);
 		
 		boolean flag = menuService.addMenu(menu);
-		return "menu/01";
+		return "menu/menuManage";
 	}
 }

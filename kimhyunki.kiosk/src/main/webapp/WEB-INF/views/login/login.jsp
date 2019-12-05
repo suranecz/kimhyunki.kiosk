@@ -164,7 +164,7 @@ h1 {
 				if(flag){ 
 					alert('관리자 로그인 성공','success');
 					clearText();
-					setTimeout(function(){location.href="02"}, 1200);
+					setTimeout(function(){location.href="adminMenu"}, 1200);
 					}
 				else{ 
 					alert('패스워드를 확인하세요','warning');

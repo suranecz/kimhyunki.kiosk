@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ServingController {
    @Autowired private ServingService servingService;
    
-   @RequestMapping("01")
+   @RequestMapping("orderManage")
    public String servingList(Model model){
       model.addAttribute("orderList", servingService.orderList());
-      return "serving/01";
+      return "serving/orderManage";
    }
    
-   @RequestMapping("02")
+   @RequestMapping("orderStatus")
    public String servingStatus(Model model){
       model.addAttribute("preparingList", servingService.preparing());
       model.addAttribute("preparedList", servingService.prepared());
-      return "serving/02";
+      return "serving/orderStatus";
    }
 }

@@ -180,13 +180,13 @@ $(document).ready(function(){
 <div class="container">
   <br><br>
   <br>
-    <button class = "backbutton" onClick="location.href='../login/02'">BACK</button>
+    <button class = "backbutton" onClick="location.href='../login/adminMenu'">BACK</button>
     <h5>주문관리</h5>
   <br>
   <br>
-     <button class = "menubutton" onClick="location.href='../menu/01'">메뉴관리</button>
+     <button class = "menubutton" onClick="location.href='../menu/menuManage'">메뉴관리</button>
      <button class = "orderbutton" onClick="location.href='#'">주문관리</button>
-     <button class = "statusbutton" onClick="location.href='02'">주문현황</button>
+     <button class = "statusbutton" onClick="location.href='orderStatus'">주문현황</button>
   <br><br>
 <div>
   <table>

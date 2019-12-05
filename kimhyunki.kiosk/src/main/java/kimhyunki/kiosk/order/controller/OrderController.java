@@ -11,27 +11,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
 	@Autowired private OrderService orderService;
 
-	@RequestMapping("01")
+	@RequestMapping("selectPlace")
 	public void place(){
 		
 	}
 	
-	@RequestMapping("02")
+	@RequestMapping("menu")
 	public void mainMenu(){
 
 	}
 	
-	@RequestMapping("03")
+	@RequestMapping("custom")
 	public void customhamberger(){
 
 	}
 	
-	@RequestMapping("04")
+	@RequestMapping("checkOrder")
 	public void orderCheck(){
 
 	}
 	
-	@RequestMapping("05")
+	@RequestMapping("complete")
 	public void payment(){
 
 	}

@@ -478,8 +478,8 @@ var stack=1;
     <div class="total-price">6,500원</div>
   </div>
   <div class="button-area">
-    <div class="btn" onclick="location.href='02'">주문 취소</div>
-    <div class="btn" onclick="location.href='02'">주문하기</div>
+    <div class="btn" onclick="location.href='menu'">주문 취소</div>
+    <div class="btn" onclick="location.href='menu'">주문하기</div>
   </div>
     <div class="footer"></div>
 </body>

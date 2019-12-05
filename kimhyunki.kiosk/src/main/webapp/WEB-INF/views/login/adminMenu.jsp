@@ -107,21 +107,21 @@
 <div class="container">
 <button class = "backbutton"  onClick="location.href='../'">MAIN</button>
   <br><br><br>
-  <a href='../menu/01'><div class="zoom">
+  <a href='../menu/menuManage'><div class="zoom">
     <br><br><br><br>
       사진
     <br><br><br><br><br>
     <h5>메뉴관리</h5>
   </div></a>
       &nbsp;&nbsp;&nbsp;
-      <a href='../serving/01'><div class="zoom">
+      <a href='../serving/orderManage'><div class="zoom">
         <br><br><br><br>
           사진
         <br><br><br><br><br>
         <h5>주문관리</h5>
       </div></a>
       &nbsp;&nbsp;&nbsp;
-      <a href='../serving/02'><div class="zoom">
+      <a href='../serving/orderStatus'><div class="zoom">
         <br><br><br><br>
           사진
         <br><br><br><br><br>

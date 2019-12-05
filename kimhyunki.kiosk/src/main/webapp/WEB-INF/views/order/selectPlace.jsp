@@ -93,14 +93,14 @@
   <br>
 <div class="container">
   <br><br><br>
-    <a href="02"><div class="zoom">
+    <a href="menu"><div class="zoom">
       <br><br><br><br>
         사진
       <br><br><br><br><br>
       <h5>매장식사</h5>
     </div></a>
       &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="02"><div class="zoom">
+    <a href="menu"><div class="zoom">
       <br><br><br><br>
         사진
       <br><br><br><br><br>

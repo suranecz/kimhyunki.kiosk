@@ -295,13 +295,13 @@ $(document).ready(function(){
 <div class="container">
   <br><br>
   <br>
-    <button class = "backbutton" onClick="location.href='../login/02'">BACK</button>
+    <button class = "backbutton" onClick="location.href='../login/adminMenu'">BACK</button>
     <h5>메뉴관리</h5>
   <br>
   <br>
      <button class = "menubutton" onClick="location.href='#'">메뉴관리</button>
-     <button class = "orderbutton" onClick="location.href='../serving/01'">주문관리</button>
-     <button class = "statusbutton" onClick="location.href='../serving/02'">주문현황</button>
+     <button class = "orderbutton" onClick="location.href='../serving/orderManage'">주문관리</button>
+     <button class = "statusbutton" onClick="location.href='../serving/orderStatus'">주문현황</button>
   <br><br>
 <div class = "buttonnav">
   <button class = "hamburger">햄버거</button>
@@ -335,7 +335,7 @@ $(document).ready(function(){
     </tbody>
   </table>
   </div>
-  <button class = "addbutton" onClick="location.href='02'">메뉴 추가</button>
+  <button class = "addbutton" onClick="location.href='addMenu'">메뉴 추가</button>
   <br>
   </div>
 </body>

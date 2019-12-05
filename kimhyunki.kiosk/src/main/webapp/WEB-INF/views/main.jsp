@@ -107,10 +107,10 @@
   <br><br>
 
   <br>
-    <button class = "adminbutton"  onClick="location.href='login/01'">ADMIN</button>
+    <button class = "adminbutton"  onClick="location.href='login/login'">ADMIN</button>
     <h5>기다리지 말고 여기서 주문해보세요</h5>
   <br>
- <a href="order/01">
+ <a href="order/selectPlace">
   <div id="demo" class="carousel slide" data-ride="carousel">
     <div class = "ad">
     <div class="carousel-inner">

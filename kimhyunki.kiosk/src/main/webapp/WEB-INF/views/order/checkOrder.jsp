@@ -521,10 +521,6 @@ var regButtons=function(){
 		});	
 	})
 	////////////////////////////////////////////////////////////////////
-	$("#sessionTest").bind("click",function(){
-		
-		alert(sessionStorage.getItem("phoneNo"),'success');
-	})
 	////////////////////////////////////////////////////////////////////
 	$("#addPointBtn").bind("click",function(){
 		
@@ -796,10 +792,9 @@ function inputNum(text) {
     합계 : 23,000원
   </div>
   <div class="bottom_btn">
-    <button id="base_backBtn" class="base_Btn" onclick="location.href='02'">돌아가기</button>
+    <button id="base_backBtn" class="base_Btn" onclick="location.href='menu'">돌아가기</button>
     <button id="base_pointSearchBtn" class="base_Btn">포인트 조회</button>
-    <button id="base_payment" class="base_Btn" onclick="location.href='05'">결제하기</button>
-    <button id="sessionTest">세션확인</button>
+    <button id="base_payment" class="base_Btn" onclick="location.href='complete'">결제하기</button>
   </div>
   	<div class="footer"></div>
 </body>

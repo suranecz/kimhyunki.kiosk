@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
 	@Autowired private LoginService loginService;
 	
-	@RequestMapping("01")
+	@RequestMapping("login")
 	public void login(){}
 	
-	@RequestMapping("02")
-	public String adminPage(){
-		return "login/02";
+	@RequestMapping("adminMenu")
+	public void adminPage(){
+
 	}
 	
 	@RequestMapping("/check")
