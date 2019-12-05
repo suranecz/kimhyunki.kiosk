@@ -444,6 +444,10 @@ var regButtons=function(){
 				phoneNo : phoneNum
 			},
 		  	success:function(user){
+		  		
+
+		  		
+		  		
 		  		maxPoint = user.point;
 		  		//조회실패 핸드폰번호입력
 		  		$(".regist_content").html(user.phoneNo);
@@ -458,9 +462,18 @@ var regButtons=function(){
 		  		$("#hiddenOriPoint").html(user.point);
 		  		$("#searchPhoneNo").html(user.phoneNo);
 		  		$("#usablePoint").html(strUsePoint);
+		  		clearText();
+		  		
+		  		
+		  		//조회 성공시 이동할 페이지 정하기
+		  		if($(user).length==1){
 		  	    $(".point_content").css('display','none');
-		  	    $(".regist_form").css('display','block');
-		  	    clearText();
+		  	    $(".point_result").css('display','block');
+		  		}else{
+			  		$(".point_content").css('display','none');
+			  	    $(".regist_form").css('display','block');
+		  		}
+		  	   
 		  	},
 		  	error:function(a,b,errMsg){
 		  		alert('조회실패함','warning');
