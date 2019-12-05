@@ -455,6 +455,7 @@ var regButtons=function(){
 		        }
 		  		//포인트사용페이지 입력
 		  		$("#oriPoint").html(strUsePoint);
+		  		$("#hiddenOriPoint").html(user.point);
 		  		$("#searchPhoneNo").html(user.phoneNo);
 		  		$("#usablePoint").html(strUsePoint);
 		  	    $(".point_content").css('display','none');
@@ -542,12 +543,27 @@ var regButtons=function(){
   });
 
   $("#paymentBtn").bind("click",function(){
-	  var oriPoint = $("#oriPoint").text();
+	  var oriPoint = $("#hiddenOriPoint").text();
 	  var totalPoint = oriPoint - usePoint;
 	  var hiddenPhoneNo = $("#searchPhoneNo").text();
-	  alert(hiddenPhoneNo+','+totalPoint);
 	 
-   // $(".point_container").css('display','none');
+	  $.ajax({
+		  url: "../user/usePoint",
+		  data:{
+			  phoneNo : hiddenPhoneNo,
+			  point : totalPoint
+		  },
+		  success:function(){
+			  alert('적용완료','success');
+		  },
+		  error:function(a,b,errMsg){
+			  alert(errmsg);
+		  }
+	  
+	  });
+	  
+
+    $(".point_container").css('display','none');
   });
   
   
@@ -699,6 +715,7 @@ function inputNum(text) {
     <div class="point_result_content">
 <input type="hidden" id="searchPhoneNo">
       잔여 포인트 : <span id="oriPoint"></span>p<br><br>
+      <input type="hidden" id="hiddenOriPoint">
       주문 금액 : <span id="totalPrice">23,000</span>원<br><br>
       사용 포인트: <span id="usablePoint"></span>p<br><br>
       <input id="delPoint" class="point_result_content_btn" type="button" value="-500p">

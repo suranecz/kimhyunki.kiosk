@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public int updatePoint(String phoneNo, int point) {
-		return userMapper.updatePoint(phoneNo, point);
+	public int updatePoint(User user) {
+		return userMapper.updatePoint(user);
 	}
 }

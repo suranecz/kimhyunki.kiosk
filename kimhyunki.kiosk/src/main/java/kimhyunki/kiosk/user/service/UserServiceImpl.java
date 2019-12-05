@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean usePoint(String phoneNo, int point) {
-		return userDao.updatePoint(phoneNo, point)>0;
+	public boolean usePoint(User user) {
+		return userDao.updatePoint(user)>0;
 	}
 }

@@ -22,7 +22,9 @@ public class UserController {
 	@RequestMapping("usePoint")
 	@ResponseBody
 	public boolean usePoint(String phoneNo, int point){
-		boolean flag=userService.usePoint(phoneNo, point);
+		User user = new User(phoneNo, point);
+		
+		boolean flag=userService.usePoint(user);
 		return flag;
 	}
 }
