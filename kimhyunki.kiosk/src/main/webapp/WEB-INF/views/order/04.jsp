@@ -218,8 +218,8 @@ h3 {
 .point_result_btn{
 	background-color:rgba(17,65,15,0.8);
 	border-radius: 5px;
-	font-size: 2.2em;
-	width:160px;
+	font-size: 2.1em;
+	width:140px;
 	margin-bottom: -15px;
 	border: 2px solid white;
 	color:white;
@@ -331,7 +331,7 @@ h1{
   margin-top: 50px;
 }
 .hiddenarea {
-  display: none;
+  
 }
 .bottom_btn{
   position: fixed;
@@ -372,6 +372,9 @@ h1{
   bottom: 230px;
   text-align: right;
   z-index: -1;
+}
+#hidden_regist_content{
+	display: none;
 }
 </style>
 </head>
@@ -444,13 +447,11 @@ var regButtons=function(){
 				phoneNo : phoneNum
 			},
 		  	success:function(user){
-		  		
-
-		  		
-		  		
 		  		maxPoint = user.point;
 		  		//조회실패 핸드폰번호입력
-		  		$(".regist_content").html(phoneNum);
+		  		var strPhoneNum = phoneNum.substring(0,3)+"-"+phoneNum.substring(3,7)+"-"+phoneNum.substring(7,11);
+		  		$(".regist_content").html(strPhoneNum);
+		  		$("#hidden_regist_content").html(phoneNum);
 		  		usePoint=user.point;
 		        var strUsePoint=""+usePoint;
 		        var pointLeng = strUsePoint.length;
@@ -497,11 +498,32 @@ var regButtons=function(){
 		$(".regist_form").css('display','none');
 	});
 
+	/////////////////////////////////////////////////////////////////////
 	$(".regist_ok").bind("click",function(){
-		$(".point_result").css('display','block');
-		$(".regist_form").css('display','none');
-	});
+		
+		var regist_phoneNum = $("#hidden_regist_content").html();
 
+		$.ajax({
+			url:"../user/joinUser",
+			data:{
+				phoneNo : regist_phoneNum
+			},
+			success:function(flag){
+				alert("회원등록이 완료되었습니다",'success');
+			},
+			complete:function(){
+				$(".regist_form").css('display','none');
+				$(".point_container").css('display','none');
+			}
+		});	
+	})
+	////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////
+	$("#addPointBtn").bind("click",function(){
+		var addPointPhoneNo = $("#hidden_regist_content").html();
+		alert(addPointPhoneNo);
+	})
+	////////////////////////////////////////////////////////////////////
   $("#base_pointSearchBtn").bind("click",function(){
     $(".point_container").css('display','block');
     $(".point_content").css('display','block');
@@ -594,13 +616,14 @@ function erase(){
   var hiddenarea = document.getElementById("hiddenarea");
 
   temp=temp.substring(0, temp.length-1);
+  originNo = originNo.substring(0, originNo.length-1);
   textarea.innerHTML = temp;
-  hiddenarea.innerHTML = temp;
+  hiddenarea.innerHTML = originNo;
   check=temp.substring(temp.length-1);
   if(check=='-'){
     temp=temp.substring(0, temp.length-1);
     textarea.innerHTML = temp;
-    hiddenarea.innerHTML = temp;
+    hiddenarea.innerHTML = originNo;
 
   }
 
@@ -711,7 +734,7 @@ function inputNum(text) {
             <input type="button" class="keypad" id="key9" value="9" onclick="inputNum(this.value)">
             <input type="button" class="keypad" id="clear" value="정정" onclick="clearText()">
             <input type="button" class="keypad" id="key10" value="0" onclick="inputNum(this.value)">
-      			<input type="button" class="keypad" id="erase" value="<-" onclick="erase()">
+      			<input type="button" class="keypad" id="erase" value="↩" onclick="erase()">
       		</div>
       	</div>
         <!--테스트끝-->
@@ -730,6 +753,7 @@ function inputNum(text) {
       잔여 포인트 : <span id="oriPoint"></span>p<br><br>
       <input type="hidden" id="hiddenOriPoint">
       주문 금액 : <span id="totalPrice">23,000</span>원<br><br>
+      <input type="hidden" id="hidden_totalPrice">
       사용 포인트: <span id="usablePoint"></span>p<br><br>
       <input id="delPoint" class="point_result_content_btn" type="button" value="-500p">
       &nbsp;
@@ -739,7 +763,9 @@ function inputNum(text) {
     </div>
     <div class="point_result_footer">
       <input id="close_point_resultBtn" type="button" class="point_result_btn" value="취소하기">
-      &nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;
+      <input id="addPointBtn" type="button" class="point_result_btn" value="적립하기">
+      &nbsp;&nbsp;&nbsp;
       <input id="paymentBtn" type="button" class="point_result_btn" value="결제하기">
     </div>
     </div>
@@ -747,6 +773,7 @@ function inputNum(text) {
 	<div class="regist_form">
 		<div class="regist_header">회원 조회 실패</div>
 		<div class="regist_content"></div>
+		<div id="hidden_regist_content"></div>
 		<div class="regist_question">해당 번호로 가입하시겠습니까?</div>
 		<div class="regist_point">※ 결제 금액의 10%가 적립됩니다 ※</div>
 		<div class="regist_btn">

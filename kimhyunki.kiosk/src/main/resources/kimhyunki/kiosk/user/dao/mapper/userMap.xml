@@ -7,11 +7,16 @@
 		from users
 		where phone_no=#{phoneNo}
 	</select>
+	
 	<update id="updatePoint" parameterType="user">
 		update users
 		set point = #{point}
 		where phone_no=#{phoneNo}
 	</update>
 	
+	<insert id="insertUser" parameterType="string">
+		insert into users(phone_no)
+		values(#{phoneNo})
+	</insert>
 	
 </mapper>

@@ -19,4 +19,9 @@ public class UserServiceImpl implements UserService{
 	public boolean usePoint(User user) {
 		return userDao.updatePoint(user)>0;
 	}
+
+	@Override
+	public boolean joinUser(String phoneNo) {
+		return userDao.insertUser(phoneNo)>0;
+	}
 }

@@ -19,4 +19,9 @@ public class UserDaoImpl implements UserDao{
 	public int updatePoint(User user) {
 		return userMapper.updatePoint(user);
 	}
+
+	@Override
+	public int insertUser(String phoneNo) {
+		return userMapper.insertUser(phoneNo);
+	}
 }

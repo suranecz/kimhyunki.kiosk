@@ -23,8 +23,14 @@ public class UserController {
 	@ResponseBody
 	public boolean usePoint(String phoneNo, int point){
 		User user = new User(phoneNo, point);
-		
 		boolean flag=userService.usePoint(user);
+		return flag;
+	}
+	
+	@RequestMapping("joinUser")
+	@ResponseBody
+	public boolean joinUser(String phoneNo){
+		boolean flag=userService.joinUser(phoneNo);
 		return flag;
 	}
 }
