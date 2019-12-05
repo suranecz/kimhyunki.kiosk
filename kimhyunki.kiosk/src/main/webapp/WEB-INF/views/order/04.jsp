@@ -450,7 +450,7 @@ var regButtons=function(){
 		  		
 		  		maxPoint = user.point;
 		  		//조회실패 핸드폰번호입력
-		  		$(".regist_content").html(user.phoneNo);
+		  		$(".regist_content").html(phoneNum);
 		  		usePoint=user.point;
 		        var strUsePoint=""+usePoint;
 		        var pointLeng = strUsePoint.length;
