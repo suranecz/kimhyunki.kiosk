@@ -1,5 +1,7 @@
 package kimhyunki.kiosk.user.controller;
 
+import javax.servlet.http.HttpSession;
+
 import kimhyunki.kiosk.user.domain.User;
 import kimhyunki.kiosk.user.service.UserService;
 
@@ -33,4 +35,5 @@ public class UserController {
 		boolean flag=userService.joinUser(phoneNo);
 		return flag;
 	}
+	
 }

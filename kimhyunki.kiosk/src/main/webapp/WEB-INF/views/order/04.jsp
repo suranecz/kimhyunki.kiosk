@@ -381,6 +381,9 @@ h1{
 <script>
 var maxPoint=0;
 var usePoint=0;
+var sessionPhoneNo=""+"";
+
+
 var alert = function(msg, type){
     swal({
         title:'',
@@ -518,10 +521,16 @@ var regButtons=function(){
 		});	
 	})
 	////////////////////////////////////////////////////////////////////
+	$("#sessionTest").bind("click",function(){
+		
+		alert(sessionStorage.getItem("phoneNo"),'success');
+	})
 	////////////////////////////////////////////////////////////////////
 	$("#addPointBtn").bind("click",function(){
+		
 		var addPointPhoneNo = $("#hidden_regist_content").html();
-		alert(addPointPhoneNo);
+		sessionStorage.setItem("phoneNo", addPointPhoneNo);
+		alert("결제진행시 결제금액의 10%가 포인트로 적립됩니다!");
 	})
 	////////////////////////////////////////////////////////////////////
   $("#base_pointSearchBtn").bind("click",function(){
@@ -790,6 +799,7 @@ function inputNum(text) {
     <button id="base_backBtn" class="base_Btn" onclick="location.href='02'">돌아가기</button>
     <button id="base_pointSearchBtn" class="base_Btn">포인트 조회</button>
     <button id="base_payment" class="base_Btn" onclick="location.href='05'">결제하기</button>
+    <button id="sessionTest">세션확인</button>
   </div>
   	<div class="footer"></div>
 </body>
