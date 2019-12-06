@@ -11,6 +11,11 @@
 <script src='http://code.jquery.com/jquery-3.1.1.min.js'></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css' />
+<script    src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 <style>
     body{
       margin : 0;
@@ -173,15 +178,132 @@
     table tr:last-child td:last-child {
       border-bottom-right-radius: 6px;
     }
-    input {
+    table input {
       width:50%;
       height:40%;
       font-size:40px;
     }
+    #uploadFile{
+      display:block;
+
+      width: 150px;
+      height: 70px;
+      position:absolute;
+      bottom:-0px;
+      opacity:0;
+      border: 1px solid yellow;
+      
+    }
+    #uploadFile:hover{
+      cursor:pointer;
+    }
+    #uploadBtn_wrapper{
+      position:fixed;
+      bottom: 50%;
+      left:20%;
+      display:block;
+      width: 150px;
+      height: 58px;
+      background:gray;
+      border-radius: 15px;
+      font-size: 1.6em;
+      
+      font-family:'배달의민족 한나는 열한살 TTF';
+    }
+    #uploadBtn_wrapper:hover{
+      cursor:pointer;
+      color:white;
+    }
+    .Btnhide{
+      z-index:-10;
+    }
+    .previewImg{
+      width: 430px;
+      height: 490px;
+      margin-left: -35px;
+      margin-top:-40px;
+      border: 1px solid grey;
+    }
 </style>
 </head>
 <script>
+	var alert = function(msg, type){
+	    swal({
+	        title:'',
+	        text:msg,
+	        type:type,
+	        timer:1000,
+	        customClass:'sweet-size',
+	        showConfirmButton:false
+	    });
+	}
+	
+	var imgView = function(input) {
+	    if (input.files && input.files[0]) {
+	        var reader = new FileReader();        
+	        reader.addEventListener("load", function(){
+	            $('.previewImg').attr('src', reader.result);
+	          }, false);
+	        reader.readAsDataURL(input.files[0]);
+	    }
+	}
+  function buttonZIndex(){
+    $("#uploadBtn_wrapper").addClass('Btnhide');
+  }
+	
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	
+	 var addMenufunction = function(){
+		var image= $("#uploadFile").val();
+		var fileName = image.substring(12,image.length);	  
+        var menuName = $(".menuName").val();
+        var menuCategory = $(".menuCategory").val();
+        var menuPrice = $(".menuPrice").val();
+        var recommend = $(".recommend_Btn").text();
+        $.ajax({
+          
+            url: "add",
+            data:{
+              menuCategory : menuCategory,
+              menuImg : fileName,
+              menuName : menuName,
+              menuPrice : menuPrice,
+              recommend : recommend
+            },
+            success:function(){
+              alert("메뉴 등록 완료",'success');
+              setTimeout(function(){location.href="menuManage"}, 1200);
+            },
+            error:function(a,b,errMsg){
+              alert("입력한 내용이 없습니다");
+            }
+            
+          });
+          }
+	
+	
+	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   var regButtons=function(){
+	  
+	    $(".addbutton").bind("click", function() {   
+        var formData = new FormData($("form")[0]); 
+          
+	        $.ajax({
+	            method: "post", 
+	            url:"uploadImage",
+	            data: formData,
+	            processData: false, //no serialize
+	            contentType: false, // multipart/formdata
+				success:function(){
+					
+				},
+	            error: function(a, b, errMsg){
+	                alert('업로드실패','warning')
+	            },
+	        }); 
+	        addMenufunction();
+	    });
+	  
 	  
     $(".recommend_Btn").bind("click",function(){
       var check=$(".recommend_Btn").html();
@@ -191,39 +313,6 @@
       $(".recommend_Btn").text('등록');
     }
     });
-    
-    $(".addbutton").bind("click",function(){
-
-    	var menuImg = $("h5").text();
-    	var menuName = $(".menuName").val();
-    	var menuCategory = $(".menuCategory").val();
-    	var menuPrice = $(".menuPrice").val();
-    	var recommend = $(".recommend_Btn").text();
-    	if((menuImg=='')||(menuName=='')||(menuCategory=='')||(menuPrice=='')){
-    		alert("모든 값을 입력해주세요");
-    	}
-    	else{
-    	//alert(menuImg+" , "+ menuName+" , "+ menuCategory+" , "+ menuPrice+" , "+ recommend);
-    	$.ajax({
-    		url: "add",
-    		data:{
-    			menuCategory : menuCategory,
-    			menuImg : menuImg,
-    			menuName : menuName,
-    			menuPrice : menuPrice,
-    			recommend : recommend
-    		},
-    		success:function(){
-    			alert("메뉴 등록 완료");
-    			location.href="menuManage";
-    		},
-    		error:function(a,b,errMsg){
-    			alert("입력한 내용이 없습니다");
-    		}
-    		
-    	});
-    	}
-    })
     
   };
   $(document).ready(function(){
@@ -240,15 +329,15 @@
   <br>
     <button class = "backbutton"  onClick="location.href='menuManage'">BACK</button>
     <div class = "imgbox">
-      <br><br><br><br>
-      <br><br><br><br><h5>메뉴사진.png</h5>
+       <img class="previewImg">
     </div>
+    
+    <form>    
+    <div font-style = "배달의민족 을지로체 TTF" id="uploadBtn_wrapper"><br>이미지 업로드<input type="file" id="uploadFile" name="uploadFile" onChange="imgView(this),buttonZIndex()"> </div> 
+	</form>
+
     <button class = "addbutton">추가</button>
-
-    <div class="addimgbutton">
-
-      <input type="file" class="menuImg" id="uploadBtn" name="myfile" value="이미지 추가">이미지 추가</input>
-    </div>
+ 
   <table>
     <colgroup>
       <col width = "30%" />
@@ -271,6 +360,7 @@
         <td><button class="recommend_Btn">등록</button></td>
     </tr>
   </table>
+  </div>
 </body>
 </html>
 

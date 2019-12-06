@@ -185,6 +185,47 @@
           height:40%;
           font-size:40px;
         }
+            #uploadFile{
+      display:block;
+
+      width: 150px;
+      height: 70px;
+      position:absolute;
+      bottom:-0px;
+      opacity:0;
+      border: 1px solid yellow;
+      
+    }
+    #uploadFile:hover{
+      cursor:pointer;
+    }
+    #uploadBtn_wrapper{
+      position:fixed;
+      bottom: 10%;
+      left:20%;
+      display:block;
+      width: 150px;
+      height: 58px;
+      background:gray;
+      border-radius: 15px;
+      font-size: 1.6em;
+      
+      font-family:'배달의민족 한나는 열한살 TTF';
+    }
+    #uploadBtn_wrapper:hover{
+      cursor:pointer;
+      color:white;
+    }
+    .Btnhide{
+      z-index:-10;
+    }
+    .previewImg{
+      width: 430px;
+      height: 490px;
+      margin-left: -35px;
+      margin-top:-40px;
+      border: 1px solid grey;
+    }
     </style>
 </head>
 <script>
@@ -235,6 +276,16 @@
     });
     
   };
+
+  var imgView = function(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();        
+        reader.addEventListener("load", function(){
+            $('.previewImg').attr('src', reader.result);
+          }, false);
+        reader.readAsDataURL(input.files[0]);
+    }
+}
   $(document).ready(function(){
     regButtons();
   });
@@ -250,18 +301,18 @@
     <h2 font-style = "배달의민족 을지로체 TTF">메뉴수정</h2>
   <br>
     <button class = "backbutton"  onClick="location.href='menuManage'">BACK</button>
+   
     <div class = "imgbox">
-      <br><br><br><br><br>
-      <br><br><br><br>
-      <h5><input type="hidden" id="menuImg" value="${menu.menuImg }"/>${menu.menuImg}</h5>
+       <img class="previewImg" src="../img/${menu.menuImg}">
     </div>
+    
+    
+    <form>    
+    	<div font-style = "배달의민족 을지로체 TTF" id="uploadBtn_wrapper"><br>이미지 수정<input type="file" id="uploadFile" name="uploadFile" onChange="imgView(this),buttonZIndex()"> </div> 
+	</form>
+	
     <button id="updateBtn" class = "updatebutton">수정</button>
-    <!-- <button class = "updatebutton" onClick="location.href='01'">수정</button>-->
 
-    <div class="updateimgbutton">
-      <button class="btn">이미지추가</button>
-      <input type="file" name="myfile" />
-    </div>
   <table>
     <colgroup>
       <col width = "30%" />
@@ -274,6 +325,10 @@
     <tr>
         <td>가격</td>
         <td><input class="menuPrice" style="text-align:right;" name="menuPrice" type="number" placeholder="${menu.menuPrice }" ></td>
+    </tr>
+    <tr>
+    <td>카테고리</td>
+	    <td><input class="menuCategory" style = "text-align:right;" name="menuCategory" type="text" placeholder="${menu.menuCategory}" required="required"></td>
     </tr>
     <tr>
         <td>추천메뉴등록</td>

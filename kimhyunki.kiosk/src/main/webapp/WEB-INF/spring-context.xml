@@ -51,4 +51,10 @@
     <mvc:resources mapping="/js/**"  location="/WEB-INF/res/js/" />   
 	<mvc:resources mapping="/font/**" location="/WEB-INF/res/font/"  />
 	<!-- <mvc:resources location="/WEB-INF/resources/stockImg/" mapping="/stockImg/**" /> -->
+	
+	
+	    <!-- ch06: file upload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <context:property-placeholder location="classpath:kimhyunki/kiosk//config/upload.properties"/>  
+    <mvc:resources mapping="/upload/**" location="/upload/" />
 </beans>

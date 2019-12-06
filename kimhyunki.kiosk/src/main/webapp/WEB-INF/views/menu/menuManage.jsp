@@ -185,7 +185,7 @@ var list = function(menuCategory){
 				+"<td>"+list[idx].menuName+"</td>"
 				+"<td>"+list[idx].menuPrice+"</td>"
 				+"<td>"+list[idx].menuImg+"</td>"
-				+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='03?menuId="+list[idx].menuId+"'>수정하기</button></td>"
+				+"<td><button class='updatebutton' value="+list[idx].menuId+" onclick=location.href='correctMenu?menuId="+list[idx].menuId+"'>수정하기</button></td>"
 				+"<td><button class='deletebutton' value="+list[idx].menuId+" onclick=\"deleteMenu("+list[idx].menuId+",\'"+menuCategory+"\')\">삭제하기</button></td>";
 				
 			});
