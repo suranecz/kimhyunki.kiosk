@@ -346,7 +346,7 @@ h1{
   border: 2px solid rgb(17, 65, 15);
   font-size: 1.6em;
   border-radius: 10px;
-	width:150px;
+  width:150px;
   margin:10px;
   padding: 10px;
   box-shadow: 0px 0px 3px grey;

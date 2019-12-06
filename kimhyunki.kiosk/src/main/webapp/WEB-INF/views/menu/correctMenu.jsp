@@ -14,6 +14,7 @@
 <script src='http://code.jquery.com/jquery-3.1.1.min.js'></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
     <style>
         body{
           margin : 0;
@@ -185,36 +186,41 @@
           height:40%;
           font-size:40px;
         }
-            #uploadFile{
+      #uploadFile{
+      cursor:pointer;
       display:block;
-
+      margin-left:-15px;
       width: 150px;
-      height: 70px;
+      height: 55px;
       position:absolute;
-      bottom:-0px;
+      bottom:0px;
       opacity:0;
-      border: 1px solid yellow;
       
     }
     #uploadFile:hover{
       cursor:pointer;
     }
     #uploadBtn_wrapper{
+      cursor:pointer;
       position:fixed;
-      bottom: 10%;
+      bottom: 18%;
       left:20%;
       display:block;
       width: 150px;
-      height: 58px;
-      background:gray;
-      border-radius: 15px;
-      font-size: 1.6em;
+      height: 50px;
+      background-color:rgba(17,65,15,0.8);
+      border-radius: 5px;
+      font-size: 2.3em;
+      border: 2px solid white;
+      padding: 10px;
+      color:white;
       
       font-family:'배달의민족 한나는 열한살 TTF';
     }
     #uploadBtn_wrapper:hover{
       cursor:pointer;
-      color:white;
+      color: rgba(17,65,15,0.8);
+      background-color: white;
     }
     .Btnhide{
       z-index:-10;
@@ -229,7 +235,63 @@
     </style>
 </head>
 <script>
+
+var alert = function(msg, type){
+    swal({
+        title:'',
+        text:msg,
+        type:type,
+        timer:1000,
+        customClass:'sweet-size',
+        showConfirmButton:false
+    });
+}
+
+var correctMenufunction = function(){
+	var originalImage= $("#checkMenuImg").val();
+	var changedImage = $("#uploadFile").val();
+	var fileName="";
+	if(changedImage==""){
+		fileName = originalImage;
+	}else if(changedImage!=""){	
+		fileName = changedImage.substring(12,changedImage.length);
+	}
+
+    var menuName = $(".menuName").val();
+    if(menuName==""){
+    	menuName="noName";
+    }
+    var menuCategory = $(".menuCategory").val();
+    var menuPrice = $(".menuPrice").val();
+    if(menuPrice==""){
+    	menuPrice=-1;
+    }
+    var recommend = $(".recommend_Btn").text();
+    var menuId = $("#menuId").val();
+    $.ajax({
+      
+        url: "update",
+        data:{
+          menuId : menuId,
+          menuCategory : menuCategory,
+          menuImg : fileName,
+          menuName : menuName,
+          menuPrice : menuPrice,
+          recommend : recommend
+        },
+        success:function(){
+          alert("메뉴 등록 완료",'success');
+          setTimeout(function(){location.href="menuManage"}, 1200);
+        },
+        error:function(a,b,errMsg){
+          alert("업로드 실패");
+        }
+        
+      });
+      }
+
   var regButtons=function(){
+	  
     $(".recommend_Btn").bind("click",function(){
       var check=$(".recommend_Btn").html();
 
@@ -240,41 +302,24 @@
     }
     });
     
-    $("#updateBtn").bind("click",function(){
-    	var menuId = $("#menuId").val();
-    	
-    	var menuImg = $("#menuImg").val();
-    	var menuName = $(".menuName").val();
-    	if(menuName==''){
-    		menuName='noName';
-    	}
-    	var menuPrice = $(".menuPrice").val();
-    	if(menuPrice==''){
-    		menuPrice=-1;
-    	}
-    	var recommend = $(".recommend_Btn").text();
-
-    	$.ajax({
-    		url: "update",
-    		data:{
-    			menuId : menuId,
-    			menuImg : menuImg,
-    			menuName : menuName,
-    			menuPrice : menuPrice,
-    			recommend : recommend
-    		},
-    		success:function(){
-    			alert("메뉴 수정 완료");
-    			location.href="menuManage";
-    		},
-    		error:function(a,b,errMsg){
-    			alert("수정한 내용이 없습니다");
-    		}
-    		
-    	});
-    	
-    });
-    
+    $("#updateBtn").bind("click", function() {   
+        var formData = new FormData($("form")[0]); 
+          
+	        $.ajax({
+	            method: "post", 
+	            url:"uploadImage",
+	            data: formData,
+	            processData: false, //no serialize
+	            contentType: false, // multipart/formdata
+				success:function(){
+					
+				},
+	            error: function(a, b, errMsg){
+	                alert('업로드실패','warning')
+	            },
+	        }); 
+	        correctMenufunction();
+	    });   
   };
 
   var imgView = function(input) {
@@ -305,14 +350,13 @@
     <div class = "imgbox">
        <img class="previewImg" src="../img/${menu.menuImg}">
     </div>
-    
+    	<input type="hidden" id="checkMenuImg" value="${menu.menuImg}">
     
     <form>    
-    	<div font-style = "배달의민족 을지로체 TTF" id="uploadBtn_wrapper"><br>이미지 수정<input type="file" id="uploadFile" name="uploadFile" onChange="imgView(this),buttonZIndex()"> </div> 
+    	<div font-style = "배달의민족 을지로체 TTF" id="uploadBtn_wrapper">이미지 수정<input type="file" id="uploadFile" name="uploadFile" onChange="imgView(this)"> </div> 
 	</form>
 	
     <button id="updateBtn" class = "updatebutton">수정</button>
-
   <table>
     <colgroup>
       <col width = "30%" />
@@ -325,10 +369,6 @@
     <tr>
         <td>가격</td>
         <td><input class="menuPrice" style="text-align:right;" name="menuPrice" type="number" placeholder="${menu.menuPrice }" ></td>
-    </tr>
-    <tr>
-    <td>카테고리</td>
-	    <td><input class="menuCategory" style = "text-align:right;" name="menuCategory" type="text" placeholder="${menu.menuCategory}" required="required"></td>
     </tr>
     <tr>
         <td>추천메뉴등록</td>

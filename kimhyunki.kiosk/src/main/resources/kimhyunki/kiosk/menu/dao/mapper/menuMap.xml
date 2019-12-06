@@ -31,7 +31,7 @@
 	<update id="setMenu" parameterType="menu">
 		update menus
 		<set>
-			<if test="menuImg != null">menu_img=#{menuImg},</if>
+			<if test="menuImg != 'noImg'">menu_img=#{menuImg},</if>
 			<if test="menuName != 'noName'">menu_name=#{menuName},</if>
 			<if test="menuPrice != -1">menu_price=#{menuPrice},</if>
 			<if test="recommend != null">recommend=#{recommend},</if>
