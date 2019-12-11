@@ -2,6 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="kimhyunki.kiosk.order.dao.mapper.OrderMapper">
-
+	<select id="getResource" resultMap="MenuMap" parameterType="string">
+		select *
+		from menus
+		where menu_category=#{menuCategory}
+		order by menu_id
+	</select>
+	
+	<resultMap type="menu" id="MenuMap">
+		<id column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName" />
+		<result column="menu_img" property="menuImg" />
+		<result column="menu_category" property="menuCategory" />
+		<result column="menu_price" property="menuPrice" />
+		<result column="recommend" property="recommend" />
+	</resultMap>
+	
+	<insert parameterType="order" id="addPlace">
+		insert into orders(ORDER_NO,place)values(#{orderNo},#{place}) 
+	</insert>
+	
+	<select id="getMaxOrderNo" resultType="int">
+		select max(order_no)
+		from orders
+	</select>
+	
+	<select id="getMenuByRecommend" resultMap="MenuMap">
+		select *
+		from menus
+		where recommend='등록'
+	</select>
 
 </mapper>

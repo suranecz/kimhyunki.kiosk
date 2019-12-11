@@ -10,6 +10,7 @@
 <title>장소선택</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src='http://code.jquery.com/jquery-3.1.1.min.js'></script>
 <style>
     body{
       margin : 0;
@@ -68,7 +69,7 @@
     img{
       border-radius: 7px;
     }
-    .zoom {
+    .zoom1, .zoom2 {
      padding: 50px;
      background-color: green;
      transition: transform .2s;
@@ -86,6 +87,63 @@
     }
 
 </style>
+<script>
+
+var inputOrderNo=0;
+
+var getMaxOrderNo = function(){
+	$.ajax({
+		url: "maxOrderNo",
+		success:function(orderNo){
+			inputOrderNo=orderNo+1;
+		}
+	});
+}
+
+var regButtons=function(){
+	
+	$('.zoom1').bind('click',function(){
+		var placeArea = "매장식사";
+		$.ajax({
+			url:"addPlace",
+			data:{
+				orderNo: inputOrderNo,
+				place: placeArea
+			},
+			success:function(){
+				sessionStorage.setItem("orderNo", inputOrderNo);
+				location.href="menu";
+			},
+			error:function(){
+				alert("매장식사 성공");
+			}
+		})
+	});
+	
+	$('.zoom2').bind('click',function(){
+		var placeArea = "테이크아웃";
+		$.ajax({
+			url:"addPlace",
+			data:{
+				orderNo: inputOrderNo,
+				place: placeArea
+			},
+			success:function(){
+				sessionStorage.setItem("orderNo", inputOrderNo);
+				location.href="menu";
+			},
+			error:function(){
+				alert('테이크아웃 실패')
+			}
+		})
+	});
+	}
+	
+$(document).ready(function(){
+	regButtons();
+	getMaxOrderNo();
+});
+</script>
 </head>
 <body>
   <div class="header"><marquee class="ad_text" width="100%">광고 텍스트 영역</marquee></div>
@@ -93,14 +151,14 @@
   <br>
 <div class="container">
   <br><br><br>
-    <a href="menu"><div class="zoom">
+    <a href="menu"><div class="zoom1">
       <br><br><br><br>
         사진
       <br><br><br><br><br>
       <h5>매장식사</h5>
     </div></a>
       &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="menu"><div class="zoom">
+    <a href="menu"><div class="zoom2">
       <br><br><br><br>
         사진
       <br><br><br><br><br>

@@ -20,12 +20,12 @@ public class ServingServiceImpl implements ServingService{
    public List<Order> prepared() {
       return servingDao.prepared();
    }
-
+   // 주문목록(주문번호, 주문상태)를 가져온다.
    public List<Order> orderList() {
       return servingDao.orderList();
    }
-
-   public String updateStatus(String orderStatus) {
-      return servingDao.updateStatus(orderStatus);
+   // 주문상태를 변경한다.
+   public int updateStatus(Order order) {
+     return servingDao.updateStatus(order);
    }
 }

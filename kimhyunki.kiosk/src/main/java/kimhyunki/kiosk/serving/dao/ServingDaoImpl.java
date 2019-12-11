@@ -20,12 +20,12 @@ public class ServingDaoImpl implements ServingDao{
    public List<Order> prepared() {
       return servingMapper.prepared();
    }
-   // 주문 리스트를 가져온다.
+// 주문목록(주문번호, 주문상태)를 가져온다.
    public List<Order> orderList() {
       return servingMapper.orderList();
    }
    // 주문상태를 변경한다.
-   public String updateStatus(String orderStatus) {
-      return servingMapper.updateStatus(orderStatus);
+   public int updateStatus(Order order) {
+      return servingMapper.updateStatus(order);
    }
 }

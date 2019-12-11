@@ -153,23 +153,34 @@
 </style>
 </head>
 <script>
-var regButtons = function(){
-    $(".status_Btn").each(function(){
+var statusButton = function(){
+   $(".status_Btn").each(function(){
       $(this).bind("click",function(){
-        var check = $(this).html();
-        if(check=='준비중'){
+      var status = $(this).html();
+       var no = $(this).val();
+        if(status =='준비중'){
           $(this).html('준비완료');
-        }else if(check=='준비완료'){
+        }else if(status == '준비완료'){
           $(this).html('주문완료');
         }else{
           $(this).html('준비중');
         }
-      });
+        $.ajax({
+           url: 'update',
+           data : {
+              orderNo: no,
+              orderStatus : $(this).html(),
+           },
+           success: function(data){
+           }
+       })
     });
+});
 };
 
+
 $(document).ready(function(){
-     regButtons();
+     statusButton();
 });
 
 </script>
@@ -187,9 +198,9 @@ $(document).ready(function(){
      <button class = "menubutton" onClick="location.href='../menu/menuManage'">메뉴관리</button>
      <button class = "orderbutton" onClick="location.href='#'">주문관리</button>
      <button class = "statusbutton" onClick="location.href='orderStatus'">주문현황</button>
-  <br><br>
+  <br><br> 
 <div>
-  <table>
+  <table id = "orderTable">
     <colgroup>
       <col width = "10%" />
       <col width = "65%" />
@@ -205,7 +216,7 @@ $(document).ready(function(){
       <tr>
         <td>${list.orderNo}</td>
         <td>🍔</td>
-        <td><button class="status_Btn" value="${list.orderStatus}">${list.orderStatus}</button></td>
+        <td><button class="status_Btn" value="${list.orderNo}">${list.orderStatus}</button></td>
       </tr>
      </c:forEach>
     </tbody>

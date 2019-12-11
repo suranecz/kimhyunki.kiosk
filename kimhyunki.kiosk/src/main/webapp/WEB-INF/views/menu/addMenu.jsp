@@ -260,6 +260,7 @@
         var menuCategory = $(".menuCategory").val();
         var menuPrice = $(".menuPrice").val();
         var recommend = $(".recommend_Btn").text();
+        
         $.ajax({
           
             url: "add",

@@ -46,6 +46,7 @@ margin-left: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 .top-nav{
   width:1000px;
@@ -334,6 +335,15 @@ top: 18%;
 #burger-item7 div:nth-child(3){
   transform:skewX(30deg) translate(15px);
 }
+.menuImgTagText{
+  text-align:center;
+  font-size: 1.3em;
+  margin-top: -8px;
+}
+.menuImgTag{
+  width: 100%;
+  height: 85%;
+}
 </style>
 </head>
 <script>
@@ -349,6 +359,38 @@ var alert = function(msg, type){
         customClass:'sweet-size',
         showConfirmButton:false
     });
+}
+var preButton = function(pageLength){
+	$("#pre").bind("click", function(pageLength){
+		
+	});
+}
+var getMenuList = function(menuCategory){
+	
+	$.ajax({
+		url:"customWithAjax",
+		data:{
+			menuCategory : menuCategory
+		},
+		success:function(menuList){
+			$(".main-panel").empty();
+				var createTable = ""
+			var Cnt = 1*1;
+			var pageLength = menuList.legnth/4;
+			
+			
+			createTable = createTable + "<div id='item_page"+Cnt+"' class='items-wrapper'>";
+			for(var i=0; i <= menuList.length-1; i++){
+				if(i%4==0 && i !=0){
+					Cnt++;
+					createTable = createTable + "</div><div id='item_page"+Cnt+"' class='items-wrapper'>";
+				}
+				createTable = createTable + "<div class='item'><img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img><div class='menuImgTagText'>"+menuList[i].menuName+"</div></div>";	
+			}
+				createTable = createTable + "</div>";
+			$(".main-panel").html(createTable);
+		}
+	});
 }
 
 var regButtons=function(){
@@ -379,12 +421,15 @@ var regButtons=function(){
 			page--;
 		};
 	});
-
+//각 li 태그 클릭시 누른 li 표시 및 ajax 통신 - 각 재료별로 가져옴
 	$("li").bind("click",function(){
-				$(this).addClass("selected");
-				$(this).siblings().removeClass("selected");
+			$(this).addClass("selected");
+			$(this).siblings().removeClass("selected");
+			var category = $(this).html();
+			getMenuList(category);				
 	});
-  $(".item").bind("click",function(){
+		
+  $(".item").on("click",function(){
     if(stack>7){
       alert('더 이상 재료를 추가 할 수 없습니다!','warning');
     }else{
@@ -401,8 +446,8 @@ $(document).ready(function(){
 	$("#item_page3").addClass('off');
 	regButtons();
 });
-var stack=1;
 
+var stack=1;
 
 
 </script>
@@ -421,32 +466,26 @@ var stack=1;
     </div>
 
     <div class="main-panel">
-      <div id="item_page1" class="items-wrapper">
-      <input type="hidden" value="1">
+      <!-- <div id="item_page1" class="items-wrapper">
+		<div class="item"><img class="menuImgTag" src="따봉.png"></img><div class="menuImgTagText">따봉</div></div>
         <div class="item">재료 사진</div>
         <div class="item">재료 사진</div>
         <div class="item">재료 사진</div>
-        <div class="item">재료 사진</div>
-
       </div>
 
       <div id="item_page2" class="items-wrapper">
-      <input type="hidden" value="2">
         <div class="item">재료 사진1</div>
         <div class="item">재료 사진1</div>
         <div class="item">재료 사진1</div>
         <div class="item">재료 사진1</div>
-
       </div>
 
       <div id="item_page3" class="items-wrapper">
-      <input type="hidden" value="3">
         <div class="item">재료 사진2</div>
         <div class="item">재료 사진2</div>
         <div class="item">재료 사진2</div>
         <div class="item">재료 사진2</div>
-
-      </div>
+      </div> -->
     </div>
 <button class="menuBtn" id="pre"><</button>
 <button class="menuBtn" id="next">></button>
@@ -475,7 +514,8 @@ var stack=1;
         <div class="items" id="item7">올리브</div>
 
     </div>
-    <div class="total-price">6,500원</div>
+    <div class="total-price">${menuList.size()}6,500원</div>
+  	
   </div>
   <div class="button-area">
     <div class="btn" onclick="location.href='menu'">주문 취소</div>

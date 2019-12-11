@@ -19,10 +19,12 @@
    <select id = "orderList" parameterType = "int" resultType = "order" >
       select order_no orderNo, order_status orderStatus
       from orders 
+      order by order_no
    </select>
    
-   <update id = "updateStatus" parameterType = "string">
+   <update id = "updateStatus" parameterType = "order">
       update orders
-      set order_status = #{orderStatus, jdbcType=VARCHAR}
+      set order_status = #{orderStatus}
+      where order_no = #{orderNo}
    </update>
 </mapper>

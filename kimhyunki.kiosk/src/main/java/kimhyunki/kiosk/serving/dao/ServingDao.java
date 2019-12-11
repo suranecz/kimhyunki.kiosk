@@ -5,8 +5,8 @@ import java.util.List;
 import kimhyunki.kiosk.order.domain.Order;
 
 public interface ServingDao {
-   List<Order> preparing();
-   List<Order> prepared();
-   List<Order> orderList();
-   String updateStatus(String orderStatus);
+   List<Order> preparing(); // 주문 중
+   List<Order> prepared();   // 주문완료
+   List<Order> orderList();   // 주문목록 (주문번호, 주문상태)
+   int updateStatus(Order order); // 정보 수정 (주문번호, 주문상태)
 }

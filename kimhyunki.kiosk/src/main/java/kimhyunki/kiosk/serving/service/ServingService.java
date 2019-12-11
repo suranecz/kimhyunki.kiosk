@@ -8,5 +8,5 @@ public interface ServingService {
    List<Order> preparing();
    List<Order> prepared();
    List<Order> orderList();
-   String updateStatus(String orderStatus);
+   int updateStatus(Order order);
 }
