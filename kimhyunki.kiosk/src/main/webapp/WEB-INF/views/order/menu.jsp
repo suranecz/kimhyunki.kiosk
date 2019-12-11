@@ -223,20 +223,43 @@ body {
 	var sessionOrderNo = sessionStorage.getItem("orderNo");
 
 	var testRegButtons = function(){
+/* 		if(pageLength !=null || pageLength != ""){
+			temp=pageLength;
+			totalPage = temp/8;
+		} */
 		for(var i=2; i<=totalPage+1; i++){
 			$("#item_page"+i).addClass('off');
 		}
 		//$("#item_page2").addClass('off');
 		$("#next").on("click", function() {
 			if (page == 1 && page<totalPage) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").removeClass('off');
-				$("#item_page3").addClass('off');
+				for(var k=1; k<totalPage+1; k++){
+					$("#item_page"+k).addClass('off');
+					
+					$("#item_page1").addClass('off');
+					$("#item_page2").addClass('off');
+					$("#item_page3").addClass('off');
+					
+/* 					if(page==k){
+						$("#item_page"+k+1).removeClass('off');
+					}else{
+						$("#item_page"+k).addClass('off');
+					} */
+				}
+				$("#item_page"+2).removeClass('off');
+				
 				page++;
-			} else if (page == 2) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").addClass('off');
-				$("#item_page3").removeClass('off');
+			} else if (page == 2 && page<totalPage) {
+				for(var k=1; k<totalPage+1; k++){
+					$("#item_page"+k).addClass('off');
+/* 					if(page==k){
+						$("#item_page"+k+1).removeClass('off');
+					}else{
+						$("#item_page"+k).addClass('off');
+					} */
+				}
+				$("#item_page"+3).removeClass('off');
+				
 				page++;
 			}
 			;
@@ -259,36 +282,6 @@ body {
 	}
 	
 	var regButtons = function() {
-/* 		$("#next").on("click", function() {
-			if (page == 1) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").removeClass('off');
-				$("#item_page3").addClass('off');
-				page++;
-			} else if (page == 2) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").addClass('off');
-				$("#item_page3").removeClass('off');
-				page++;
-			}
-			;
-		});
-
-		$("#pre").on("click", function() {
-			if (page == 3) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").removeClass('off');
-				$("#item_page3").addClass('off');
-				page--;
-			} else if (page == 2) {
-				$("#item_page1").removeClass('off');
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				page--;
-			}
-			;
-		}); */
-
 		$("li").on("click", function() {
 
 			$(this).addClass("selected");
@@ -344,7 +337,7 @@ body {
 				}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
-				testRegButtons();
+				testRegButtons(pageLength);
 			}
 		});
 	}
@@ -376,7 +369,7 @@ body {
 				}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
-				testRegButtons();
+				testRegButtons(pageLength);
 				//이부분
 
 				}
@@ -421,9 +414,10 @@ body {
 					</div>
 					<input type="hidden" value="${count = count + 1}">
 					<c:choose>
-					<c:when test="${count == 9}">
+					<c:when test="${count%8==1 && count !=1}">
 						</div><div id="item_page${divCnt = divCnt + 1}" class="items-wrapper">
-						</c:when>
+					</c:when>
+
 					</c:choose>
 				</c:forEach>
 			</div>
