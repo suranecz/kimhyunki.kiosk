@@ -218,66 +218,46 @@ body {
 </head>
 <script>
 	var temp = ${menuList.size() };
-	var totalPage = temp/8;
+	var totalPage_float = temp/8;
+	var totalPage = parseInt(totalPage_float);
 	var page = 1 * 1;
 	var sessionOrderNo = sessionStorage.getItem("orderNo");
 
-	var testRegButtons = function(){
-/* 		if(pageLength !=null || pageLength != ""){
-			temp=pageLength;
-			totalPage = temp/8;
-		} */
-		for(var i=2; i<=totalPage+1; i++){
+	var testRegButtons = function(pageNum){
+		page=1*1;
+		temp = pageNum;
+		totalPage = parseInt(temp/8);
+		alert('생성된 페이지넘버'+totalPage);
+ 		for(var i=2; i<=totalPage+1; i++){
 			$("#item_page"+i).addClass('off');
-		}
-		//$("#item_page2").addClass('off');
+		} 
+
 		$("#next").on("click", function() {
-			if (page == 1 && page<totalPage) {
-				for(var k=1; k<totalPage+1; k++){
-					$("#item_page"+k).addClass('off');
-					
-					$("#item_page1").addClass('off');
-					$("#item_page2").addClass('off');
-					$("#item_page3").addClass('off');
-					
-/* 					if(page==k){
-						$("#item_page"+k+1).removeClass('off');
-					}else{
+			for(var i =1; i<=totalPage; i++){
+				if(page==i && page<=totalPage){
+					for(var k=1; k<totalPage+1; k++){
 						$("#item_page"+k).addClass('off');
-					} */
+					}
 				}
-				$("#item_page"+2).removeClass('off');
-				
-				page++;
-			} else if (page == 2 && page<totalPage) {
-				for(var k=1; k<totalPage+1; k++){
-					$("#item_page"+k).addClass('off');
-/* 					if(page==k){
-						$("#item_page"+k+1).removeClass('off');
-					}else{
-						$("#item_page"+k).addClass('off');
-					} */
-				}
-				$("#item_page"+3).removeClass('off');
-				
-				page++;
 			}
-			;
+			$("#item_page"+(page+1)).removeClass('off');
+			page++;
+			console.log(page);
+
 		});
 
 		$("#pre").on("click", function() {
-			if (page == 3) {
-				$("#item_page1").addClass('off');
-				$("#item_page2").removeClass('off');
-				$("#item_page3").addClass('off');
-				page--;
-			} else if (page == 2) {
-				$("#item_page1").removeClass('off');
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				page--;
+
+			for(var k =1 ; k>=-5; k--){
+			if(page == totalPage*1+k){
+				for(var i =totalPage*1+1; i>=1; i--){
+					$("#item_page"+i).addClass('off');
+					}
+				}
 			}
-			;
+			$("#item_page"+(page-1)).removeClass('off');
+			page--;
+			console.log(page);
 		});
 	}
 	
@@ -288,27 +268,14 @@ body {
 			$(this).siblings().removeClass("selected");
 			if($(this).html() =='사이드'){
 				getMenuList($(this).html());
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				testRegButtons();
 			}else if($(this).html() =='햄버거'){
 				getMenuList($(this).html());
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				testRegButtons();
 
 			}else if($(this).html() =='음료'){
 				getMenuList($(this).html());
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				testRegButtons();
 
 			}else if($(this).html() =='추천메뉴'){
 				getRecommendMenuList();
-				$("#item_page2").addClass('off');
-				$("#item_page3").addClass('off');
-				testRegButtons();
-
 			}
 			if ($("#list4").hasClass("selected") === true) {
 				location.href = "custom";
@@ -324,8 +291,10 @@ body {
 				
 				var createTable = ""
 				var Cnt = 1*1;
-				var pageLength = menuList.legnth/8;
-				
+				var pageLength = menuList.length/8;
+				var intPage =menuList.length;
+				alert('intPage값: '+intPage);
+
 				
 				createTable = "<div id='item_page"+Cnt+"' class='items-wrapper'>";
 				for(var i=0; i <= menuList.length-1; i++){
@@ -337,7 +306,9 @@ body {
 				}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
-				testRegButtons(pageLength);
+				$("#next").off("click");
+				$("#pre").off("click");
+				testRegButtons(intPage);
 			}
 		});
 	}
@@ -355,8 +326,9 @@ body {
 				
 				var createTable = ""
 				var Cnt = 1*1;
-				var pageLength = menuList.legnth/8;
-				
+				var pageLength = menuList.length/8;
+				var intPage = menuList.length;
+				alert('intPage값: '+intPage);
 				
 				createTable = createTable + "<div id='item_page"+Cnt+"' class='items-wrapper'>";
 				for(var i=0; i <= menuList.length-1; i++){
@@ -369,21 +341,22 @@ body {
 				}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
-				testRegButtons(pageLength);
+				$("#next").off("click");
+				$("#pre").off("click");
+				testRegButtons(intPage);
 				//이부분
 
 				}
 			});
 	}
 	$(document).ready(function(){
-		$("#item_page2").addClass('off');
-		$("#item_page3").addClass('off');
+		for(var i=2; i<=totalPage+1; i++){
+			$("#item_page"+i).addClass('off');
+		} 
+		var pageNum=${menuList.size()}
 		regButtons();
-		testRegButtons();
+		testRegButtons(pageNum);
 	});
-	$(document).on("click",'li',function(){
-		$("#item_page2").css('display','none');
-	})
 
 
 </script>
