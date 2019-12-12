@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -347,8 +349,11 @@ top: 18%;
 </style>
 </head>
 <script>
-var page=1*1;
-var pages=[1,2,3];
+var temp = ${menuList.size() };
+var totalPage_float = temp/8;
+var totalPage = parseInt(totalPage_float);
+var page = 1 * 1;
+var sessionOrderNo = sessionStorage.getItem("orderNo");
 
 var alert = function(msg, type){
     swal({
@@ -360,24 +365,64 @@ var alert = function(msg, type){
         showConfirmButton:false
     });
 }
-var preButton = function(pageLength){
-	$("#pre").bind("click", function(pageLength){
-		
+var testRegButtons = function(pageNum){
+	page=1*1;
+	temp = pageNum;
+	totalPage = parseInt(temp/4);
+		for(var i=2; i<=totalPage+1; i++){
+		$("#item_page"+i).addClass('off');
+	} 
+
+	$("#next").on("click", function() {
+		if(page<=totalPage){
+		for(var i =1; i<=totalPage; i++){
+			if(page==i && page<=totalPage){
+				for(var k=1; k<totalPage+1; k++){
+					$("#item_page"+k).addClass('off');
+				}
+			}
+		}
+		$("#item_page"+(page+1)).removeClass('off');
+		page++;
+		console.log(page);
+		}else{
+			console.log('ㄴㄴ초과');
+		}
+
+	});
+
+	$("#pre").on("click", function() {
+		if(page>1){
+		for(var k =1 ; k>=-5; k--){
+		if(page == totalPage*1+k){
+			for(var i =totalPage*1+1; i>=1; i--){
+				$("#item_page"+i).addClass('off');
+				}
+			}
+		}
+		$("#item_page"+(page-1)).removeClass('off');
+		page--;
+		console.log(page);
+		}else{
+			console.log('ㄴㄴ첫페이지');
+		}
 	});
 }
+
 var getMenuList = function(menuCategory){
-	
+	$(".main-panel").empty();
 	$.ajax({
 		url:"customWithAjax",
 		data:{
 			menuCategory : menuCategory
 		},
 		success:function(menuList){
-			$(".main-panel").empty();
-				var createTable = ""
+			
+			
+			var createTable = ""
 			var Cnt = 1*1;
 			var pageLength = menuList.legnth/4;
-			
+			var intPage = menuList.length;
 			
 			createTable = createTable + "<div id='item_page"+Cnt+"' class='items-wrapper'>";
 			for(var i=0; i <= menuList.length-1; i++){
@@ -389,38 +434,15 @@ var getMenuList = function(menuCategory){
 			}
 				createTable = createTable + "</div>";
 			$(".main-panel").html(createTable);
+			$("#next").off("click");
+			$("#pre").off("click");
+			testRegButtons(intPage);
 		}
 	});
 }
 
 var regButtons=function(){
-	$("#next").bind("click",function(){
-		if(page==1){
-			$("#item_page1").addClass('off');
-			$("#item_page2").removeClass('off');
-			$("#item_page3").addClass('off');
-			page++;
-		}else if(page==2){
-			$("#item_page1").addClass('off');
-			$("#item_page2").addClass('off');
-			$("#item_page3").removeClass('off');
-			page++;
-		};
-	});
 
-	$("#pre").bind("click",function(){
-		if(page==3){
-			$("#item_page1").addClass('off');
-			$("#item_page2").removeClass('off');
-			$("#item_page3").addClass('off');
-			page--;
-		}else if(page==2){
-			$("#item_page1").removeClass('off');
-			$("#item_page2").addClass('off');
-			$("#item_page3").addClass('off');
-			page--;
-		};
-	});
 //각 li 태그 클릭시 누른 li 표시 및 ajax 통신 - 각 재료별로 가져옴
 	$("li").bind("click",function(){
 			$(this).addClass("selected");
@@ -442,9 +464,12 @@ var regButtons=function(){
 
 };
 $(document).ready(function(){
-	$("#item_page2").addClass('off');
-	$("#item_page3").addClass('off');
+	for(var i=2; i<=totalPage+1; i++){
+		$("#item_page"+i).addClass('off');
+	} 
+	var pageNum=${menuList.size()}
 	regButtons();
+	testRegButtons(pageNum);
 });
 
 var stack=1;
@@ -466,26 +491,23 @@ var stack=1;
     </div>
 
     <div class="main-panel">
-      <!-- <div id="item_page1" class="items-wrapper">
-		<div class="item"><img class="menuImgTag" src="따봉.png"></img><div class="menuImgTagText">따봉</div></div>
-        <div class="item">재료 사진</div>
-        <div class="item">재료 사진</div>
-        <div class="item">재료 사진</div>
-      </div>
+		<c:set var="count" value="1"></c:set>
+		<c:set var="divCnt" value="1"></c:set>
+		<div id="item_page${count}" class="items-wrapper">
+			<c:forEach var="list" items="${menuList}">
+				<div class="item">
+					<img class='menuImgTag' src='../img/${list.menuImg}'></img>
+					<div class='menuImgTagText'>${list.menuName }</div>
+				</div>
+				<input type="hidden" value="${count = count + 1}">
+				<c:choose>
+				<c:when test="${count%4==1 && count !=1}">
+					</div><div id="item_page${divCnt = divCnt + 1}" class="items-wrapper">
+				</c:when>
 
-      <div id="item_page2" class="items-wrapper">
-        <div class="item">재료 사진1</div>
-        <div class="item">재료 사진1</div>
-        <div class="item">재료 사진1</div>
-        <div class="item">재료 사진1</div>
-      </div>
-
-      <div id="item_page3" class="items-wrapper">
-        <div class="item">재료 사진2</div>
-        <div class="item">재료 사진2</div>
-        <div class="item">재료 사진2</div>
-        <div class="item">재료 사진2</div>
-      </div> -->
+				</c:choose>
+			</c:forEach>
+		</div>
     </div>
 <button class="menuBtn" id="pre"><</button>
 <button class="menuBtn" id="next">></button>

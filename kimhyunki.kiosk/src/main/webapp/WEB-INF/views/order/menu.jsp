@@ -227,12 +227,12 @@ body {
 		page=1*1;
 		temp = pageNum;
 		totalPage = parseInt(temp/8);
-		alert('생성된 페이지넘버'+totalPage);
  		for(var i=2; i<=totalPage+1; i++){
 			$("#item_page"+i).addClass('off');
 		} 
 
 		$("#next").on("click", function() {
+			if(page<=totalPage){
 			for(var i =1; i<=totalPage; i++){
 				if(page==i && page<=totalPage){
 					for(var k=1; k<totalPage+1; k++){
@@ -243,11 +243,14 @@ body {
 			$("#item_page"+(page+1)).removeClass('off');
 			page++;
 			console.log(page);
+			}else{
+				console.log('ㄴㄴ초과');
+			}
 
 		});
 
 		$("#pre").on("click", function() {
-
+			if(page>1){
 			for(var k =1 ; k>=-5; k--){
 			if(page == totalPage*1+k){
 				for(var i =totalPage*1+1; i>=1; i--){
@@ -258,6 +261,9 @@ body {
 			$("#item_page"+(page-1)).removeClass('off');
 			page--;
 			console.log(page);
+			}else{
+				console.log('ㄴㄴ첫페이지');
+			}
 		});
 	}
 	
@@ -293,8 +299,6 @@ body {
 				var Cnt = 1*1;
 				var pageLength = menuList.length/8;
 				var intPage =menuList.length;
-				alert('intPage값: '+intPage);
-
 				
 				createTable = "<div id='item_page"+Cnt+"' class='items-wrapper'>";
 				for(var i=0; i <= menuList.length-1; i++){
@@ -328,7 +332,6 @@ body {
 				var Cnt = 1*1;
 				var pageLength = menuList.length/8;
 				var intPage = menuList.length;
-				alert('intPage값: '+intPage);
 				
 				createTable = createTable + "<div id='item_page"+Cnt+"' class='items-wrapper'>";
 				for(var i=0; i <= menuList.length-1; i++){
