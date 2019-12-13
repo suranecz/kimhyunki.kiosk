@@ -65,4 +65,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.setPoint(user)>0;
 	}
 
+	@Override
+	public boolean adjustOrderStatus(int orderNo) {
+		return orderDao.updateOrderStauts(orderNo)>0;
+	}
+
 }

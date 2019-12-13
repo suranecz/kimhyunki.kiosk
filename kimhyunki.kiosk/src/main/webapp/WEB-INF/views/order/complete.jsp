@@ -93,6 +93,15 @@
   
   function printOrderNo(){
 	   var orderNo = sessionStorage.getItem("orderNo");
+	   $.ajax({
+		   url:"adjustOrderStatus",
+		   data:{
+			   orderNo : orderNo
+		   },
+		   success:function(){
+			   console.log('주문상태 변경 성공');
+		   }
+	   })
 	   $("#printOrderNo").html(orderNo);
   }
   $(document).ready(function(){

@@ -18,4 +18,5 @@ public interface OrderMapper {
 	int plusStock(int menuId);
 	int getTotalPrice(int orderNo);
 	int setPoint(User user);
+	int updateOrderStauts(int orderNo);
 }

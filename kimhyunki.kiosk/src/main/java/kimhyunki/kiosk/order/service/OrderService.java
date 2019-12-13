@@ -18,4 +18,6 @@ public interface OrderService {
 	boolean addStock(int menuId);
 	int selectTotalPrice(int orderNo);
 	boolean addPoint(User user);
+	boolean adjustOrderStatus(int orderNo);
+	
 }

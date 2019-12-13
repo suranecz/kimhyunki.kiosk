@@ -116,4 +116,11 @@ public class OrderController {
 	public void payment(HttpSession session){
 		session.invalidate();
 	}
+	
+	@RequestMapping("adjustOrderStatus")
+	@ResponseBody
+	public boolean adjustOrderStatus(int orderNo){
+		return orderService.adjustOrderStatus(orderNo);
+	}
+	
 }

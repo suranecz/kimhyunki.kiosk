@@ -65,4 +65,9 @@
 		update users set point=point+#{point}
    		where PHONE_NO=#{phoneNo}
 	</update>
+	
+	<update id="updateOrderStauts" parameterType="int">
+		update orders set order_status='준비중'
+        where order_no=#{orderNo}
+	</update>
 </mapper>

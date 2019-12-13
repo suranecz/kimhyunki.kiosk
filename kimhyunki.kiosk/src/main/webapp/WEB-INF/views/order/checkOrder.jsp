@@ -332,7 +332,7 @@ h1{
   margin-top: 50px;
 }
 .hiddenarea {
-  
+  display: none;
 }
 .bottom_btn{
   position: fixed;

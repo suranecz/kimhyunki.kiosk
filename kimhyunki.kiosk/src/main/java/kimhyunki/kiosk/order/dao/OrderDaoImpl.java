@@ -64,5 +64,10 @@ public class OrderDaoImpl implements OrderDao{
 	public int setPoint(User user) {
 		return orderMapper.setPoint(user);
 	}
+
+	@Override
+	public int updateOrderStauts(int orderNo) {
+		return orderMapper.updateOrderStauts(orderNo);
+	}
 	
 }
