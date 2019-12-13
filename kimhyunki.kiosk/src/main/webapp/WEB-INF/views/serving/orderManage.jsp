@@ -215,7 +215,7 @@ $(document).ready(function(){
      <c:forEach var="list" items="${orderList}">
       <tr>
         <td>${list.orderNo}</td>
-        <td>🍔</td>
+        <td>메뉴리스트</td>
         <td><button class="status_Btn" value="${list.orderNo}">${list.orderStatus}</button></td>
       </tr>
      </c:forEach>

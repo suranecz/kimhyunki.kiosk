@@ -140,15 +140,15 @@ transform: scale(1.04);
 }
 .burger-item{
   position: fixed;
-  width: 450px;
-  height: 80px;
-  background-color: lightgrey;
+  width: 600px;
+  height: 150px;
+  display:none;  
   bottom:1.5%;
-  border: 1px solid black;
+  border: none;
   left:50%;
   right:50%;
   transform: translate(-50%,0%);
-  display: none;
+
 
 }
 
@@ -229,124 +229,8 @@ top: 18%;
   background-color: rgb(17,65,15);
 }
 </style>
-<style>
-#burger-item1{
-  background:#e7c582;
-  border-radius:30px 30px 50px 50px;
-  border:none;
-}
-#burger-item1 div{
-  width:100%; height:40px;
-  background:#ffbf65;
-  border-radius:100px;
-}
-#burger-item2{
-  background:none;
-  border:none;
-}
-#burger-item2 div:first-child{
-  background:#4dd091;
-  height:100%; transform:skewX(20deg) rotate(3deg);
-  border-radius:0px 150px 10px 35px;
-}
-#burger-item2 div:last-child{
-  background:#4dd091;
-  width:100%;
-  margin-top:-60px;
-  height:60px; transform:skewX(-10deg) rotate(-2deg);
-  border-radius:50px 30px 10px 25px;
-}
-#burger-item3{
-  background:red;
-  border:none;
-  border-radius:100px;
-}
-#burger-item3 div{
-  background:#ff4444;
-  border:none;
-  border-radius:100px;
-  width:100%; height:70px;
-}
-#burger-item4{
-  background:#a52a2a;
-  border:none;
-  border-radius: 20px;
-}
-#burger-item4 div{
-  width:100%; height:60%;
-  background:#cc5d40;
-  border-radius: 20px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-#burger-item4 div span{
-  display:block;
-  width:100px; height:3px;
-  background-color:#fed4cc;
-  transform: rotate(-20deg);
-}
-#burger-item5{
-  background:radial-gradient(transparent 0%, transparent 25%, white 25%, white 50%, #f9f5ea 50%, #f9f5ea 100%);
-  border-radius:50%;
-  border:2px solid plum;
-  height:70px;
-}
-#burger-item5 div{
-  background:radial-gradient(transparent 0%, transparent 25%, white 25%, white 50%, #f9f5ea 50%, #f9f5ea 100%);
-  border-radius:50%;
-  border:2px solid plum;
-  height:60px; width:46%;
-  margin-top:-20px;
-  display:inline-block;
-}
-#burger-item5 div:last-child{
-  width:50%;
-}
-#burger-item6{
-  background:none;
-  border:none;
-  transform:scaleY(0.3) translate(-50%, -100px);
-}
-#burger-item6 div{
-  background:#ffec59;
-  width:400px; height:400px;
-  border:none;
-  border-radius:200px 10px 10px 10px;
-  transform:rotate(45deg);
-}
-#burger-item7{
-  background:#e7c582;
-  border-radius:100px 100px 0px 0px;
-  border:none;
-}
-#burger-item7 div{
-  width:10px; height:10px;
-  border:1px solid #cd7f32;
-  background:white;
-  border-radius:10px;
-  margin:0 auto;
-  display:inline-block;
-}
-#burger-item7 div:nth-child(1){
-  transform:skewX(30deg) translateX(-20px);
-}
-#burger-item7 div:nth-child(2){
-  transform:skewX(30deg);
-}
-#burger-item7 div:nth-child(3){
-  transform:skewX(30deg) translate(15px);
-}
-.menuImgTagText{
-  text-align:center;
-  font-size: 1.3em;
-  margin-top: -8px;
-}
-.menuImgTag{
-  width: 100%;
-  height: 85%;
-}
-</style>
+
+
 </head>
 <script>
 var temp = ${menuList.size() };
@@ -354,6 +238,7 @@ var totalPage_float = temp/8;
 var totalPage = parseInt(totalPage_float);
 var page = 1 * 1;
 var sessionOrderNo = sessionStorage.getItem("orderNo");
+var burgerCnt=0;
 
 var alert = function(msg, type){
     swal({
@@ -365,6 +250,7 @@ var alert = function(msg, type){
         showConfirmButton:false
     });
 }
+
 var testRegButtons = function(pageNum){
 	page=1*1;
 	temp = pageNum;
@@ -407,6 +293,46 @@ var testRegButtons = function(pageNum){
 			console.log('ㄴㄴ첫페이지');
 		}
 	});
+	
+	  $(".item").on("click",function(){
+		    if(burgerCnt>7){
+		    	var addBread="<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
+							"<img src='../img/bread2.png' style='width: 100%; height:100%;'"+
+							"</div>";
+					    	$(".making-box").append(addBread);
+					        $("#burger-item"+burgerCnt).css('bottom',7+6*burgerCnt+'%');
+					        $("#burger-item"+burgerCnt).css('display','block');
+					    	burgerCnt++;
+				
+		      alert('더 이상 재료를 추가 할 수 없습니다!','warning');
+		    }else{
+		    	var imgName = $(this).children(".hiddenMenuImg").val();
+		    	var makingBurger ="";
+		    	
+		    	if(imgName=='패티.png'){
+		    		console.log('패티맞음');
+		    	   makingBurger =  "<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
+ 								"<img src='../img/"+imgName+"' style='width: 130%; height:100%; margin-right:-20px;'"+
+ 								"</div>";
+		    	}else if(imgName=='토마토'){
+			       makingBurger =  "<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
+		 							"<img src='../img/"+imgName+"' style='width: 90%; height:100%;'"+
+		 							"</div>";
+		    	}else if(imgName=='더블치즈'){
+				       makingBurger =  "<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
+						"<img src='../img/"+imgName+"' style='width: 110%; height:100%;'"+
+						"</div>";
+		    	}else{
+		    	   makingBurger =  "<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
+				 				"<img src='../img/"+imgName+"' style='width: 100%; height:100%;'"+
+				 				"</div>";
+		    	}
+		    	$(".making-box").append(makingBurger);
+		        $("#burger-item"+burgerCnt).css('bottom',7+6*burgerCnt+'%');
+		        $("#burger-item"+burgerCnt).css('display','block');
+		    	burgerCnt++;
+		        }
+		  });
 }
 
 var getMenuList = function(menuCategory){
@@ -417,8 +343,6 @@ var getMenuList = function(menuCategory){
 			menuCategory : menuCategory
 		},
 		success:function(menuList){
-			
-			
 			var createTable = ""
 			var Cnt = 1*1;
 			var pageLength = menuList.legnth/4;
@@ -430,38 +354,29 @@ var getMenuList = function(menuCategory){
 					Cnt++;
 					createTable = createTable + "</div><div id='item_page"+Cnt+"' class='items-wrapper'>";
 				}
-				createTable = createTable + "<div class='item'><img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img><div class='menuImgTagText'>"+menuList[i].menuName+"</div></div>";	
+				createTable = createTable + "<div class='item'>"+
+											"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"' style='width:100%; height:80%;'></img>"+
+											"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
+											"<input class='hiddenMenuImg' type='hidden' value='"+menuList[i].menuImg+"'>"+
+											"</div>";	
 			}
 				createTable = createTable + "</div>";
 			$(".main-panel").html(createTable);
 			$("#next").off("click");
 			$("#pre").off("click");
+			$(".item").off("click");
 			testRegButtons(intPage);
 		}
 	});
 }
-
+	
 var regButtons=function(){
-
-//각 li 태그 클릭시 누른 li 표시 및 ajax 통신 - 각 재료별로 가져옴
 	$("li").bind("click",function(){
 			$(this).addClass("selected");
 			$(this).siblings().removeClass("selected");
 			var category = $(this).html();
-			getMenuList(category);				
+			getMenuList(category);	
 	});
-		
-  $(".item").on("click",function(){
-    if(stack>7){
-      alert('더 이상 재료를 추가 할 수 없습니다!','warning');
-    }else{
-        $("#burger-item"+stack).css('display','block');
-        $("#burger-item"+stack).css('bottom',-3+6*stack+'%');
-        $("#item"+stack).css('display','block');
-          stack++;
-        }
-  });
-
 };
 $(document).ready(function(){
 	for(var i=2; i<=totalPage+1; i++){
@@ -471,9 +386,6 @@ $(document).ready(function(){
 	regButtons();
 	testRegButtons(pageNum);
 });
-
-var stack=1;
-
 
 </script>
 <body>
@@ -496,9 +408,11 @@ var stack=1;
 		<div id="item_page${count}" class="items-wrapper">
 			<c:forEach var="list" items="${menuList}">
 				<div class="item">
-					<img class='menuImgTag' src='../img/${list.menuImg}'></img>
+					<img class='menuImgTag' src='../img/${list.menuImg}' style="width:100%; height: 80%;"></img>
 					<div class='menuImgTagText'>${list.menuName }</div>
+					<input class='hiddenMenuImg' type='hidden' value='${list.menuImg }'>
 				</div>
+											
 				<input type="hidden" value="${count = count + 1}">
 				<c:choose>
 				<c:when test="${count%4==1 && count !=1}">
@@ -514,15 +428,9 @@ var stack=1;
 
 
     <div class="making-box">
-      <div class="burger-item" id="burger-item1"><div></div></div>
-      <div class="burger-item" id="burger-item2"><div></div><div></div></div>
-      <div class="burger-item" id="burger-item3"><div></div></div>
-      <div class="burger-item" id="burger-item4"><div><span></span><span></span><span></span></div></div>
-      <div class="burger-item" id="burger-item5"><div></div><div></div><div></div></div>
-      <div class="burger-item" id="burger-item6"><div></div></div>
-      <div class="burger-item" id="burger-item7"><div></div><div></div><div></div></div>
 
     </div>
+    
   </div>
   <div class="order-box">
     <div class="order-box-header">주문 내역</div>

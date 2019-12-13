@@ -363,7 +363,7 @@ function setCartList(item){
 		}
 	});
 	cartList = cartList +menuName;
-	$(".order-list").html(cartList);
+	$(".order-list").html(cartList+"/");
 }
 
 </script>

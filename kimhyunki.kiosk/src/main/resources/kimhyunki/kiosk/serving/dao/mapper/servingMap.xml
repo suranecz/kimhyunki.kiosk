@@ -5,15 +5,17 @@
    <select id = "preparing" parameterType = "int" resultType = "order">
       select order_no orderNo
       from orders
-      where order_status = '준비중'
+      where order_status = '준비완료'
       <![CDATA[ AND ROWNUM <= 4 ]]>
+      order by order_no
    </select>
    
    <select id = "prepared" parameterType = "int" resultType = "order">
       select order_no orderNo
       from orders
-      where order_status = '준비완료'
+      where order_status = '준비중'
       <![CDATA[ AND ROWNUM <= 4 ]]>
+      order by order_no
    </select>
    
    <select id = "orderList" parameterType = "int" resultType = "order" >
