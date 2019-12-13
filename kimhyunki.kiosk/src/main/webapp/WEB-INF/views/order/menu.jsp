@@ -83,7 +83,6 @@ body {
 }
 
 .top-nav ul li.selected {
-	/*각 페이지의 html에 selected라는 클래스 속성을 정적으로 부여하세요. 좀 더 커짐*/
 	width: 200px;
 	height: 58px;
 	font-size: 1.5em;
@@ -104,17 +103,6 @@ body {
 .items-wrapper {
 	margin: 0 auto;
 	display: grid;
-	/*
-  그림을 보고 이해가 안가서 대충 냅뒀으니
-  알아서 사용하기 좋게 만드시오.
-  if, 좌우 <>버튼으로 페이지를 이동한다면
-  height을 450px(main-panel)과 맞춘 현재 상태를 유지한다.
-  else if, 아래로 스크롤할 예정이라면 height의 500px을 지우고,
-  grid-template-rows에 item의 세로픽셀만큼을 두번 연달아 적는다.
-  (ex: grid-template-rows: 360px 360px)
-  else, 이도저도아니면 확실히 마음을 정해서 다시 문의하도록한다.
-  (html 재구축은 공짜가 아니다,,,)
-  */
 	width: 850px;
 	height: 450px;
 	grid-template-columns: 25% 25% 25% 25%;
@@ -223,46 +211,34 @@ body {
 	var page = 1 * 1;
 	var sessionOrderNo = sessionStorage.getItem("orderNo");
 
-	var testRegButtons = function(pageNum){
+	var testRegButtons = function(menuNum){
 		page=1*1;
-		temp = pageNum;
-		totalPage = parseInt(temp/8);
+		totalPage = parseInt(menuNum/8);
  		for(var i=2; i<=totalPage+1; i++){
 			$("#item_page"+i).addClass('off');
 		} 
-
-		$("#next").on("click", function() {
-			if(page<=totalPage){
-			for(var i =1; i<=totalPage; i++){
-				if(page==i && page<=totalPage){
-					for(var k=1; k<totalPage+1; k++){
-						$("#item_page"+k).addClass('off');
-					}
-				}
-			}
-			$("#item_page"+(page+1)).removeClass('off');
-			page++;
-			console.log(page);
-			}else{
-				console.log('ㄴㄴ초과');
-			}
-
-		});
-
 		$("#pre").on("click", function() {
 			if(page>1){
-			for(var k =1 ; k>=-5; k--){
-			if(page == totalPage*1+k){
 				for(var i =totalPage*1+1; i>=1; i--){
 					$("#item_page"+i).addClass('off');
-					}
 				}
-			}
 			$("#item_page"+(page-1)).removeClass('off');
 			page--;
 			console.log(page);
 			}else{
-				console.log('ㄴㄴ첫페이지');
+				console.log('첫페이지');
+			}
+		});
+		$("#next").on("click", function() {
+			if(page<=totalPage){
+				for(var k=1; k<totalPage+1; k++){
+					$("#item_page"+k).addClass('off');
+				}
+			$("#item_page"+(page+1)).removeClass('off');
+			page++;
+			console.log(page);
+			}else{
+				console.log('마지막 페이지');
 			}
 		});
 	}
@@ -272,8 +248,10 @@ body {
 
 			$(this).addClass("selected");
 			$(this).siblings().removeClass("selected");
+			
 			if($(this).html() =='사이드'){
 				getMenuList($(this).html());
+				
 			}else if($(this).html() =='햄버거'){
 				getMenuList($(this).html());
 
@@ -283,10 +261,9 @@ body {
 			}else if($(this).html() =='추천메뉴'){
 				getRecommendMenuList();
 			}
-			if ($("#list4").hasClass("selected") === true) {
+			if($("#list4").hasClass("selected") === true){
 				location.href = "custom";
 			}
-
 		});
 	};
 	var getRecommendMenuList = function(){
@@ -306,8 +283,12 @@ body {
 						Cnt++;
 						createTable = createTable + "</div><div id='item_page"+Cnt+"' class='items-wrapper'>";
 					}
-					createTable = createTable + "<div class='item'><img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img><div class='menuImgTagText'>"+menuList[i].menuName+"</div></div>";	
-				}
+					createTable = createTable + "<div class='item' onclick='setCartList(this)'>"+
+					"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img>"+
+					"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
+					"<div class='menuImgTagPrice'>"+menuList[i].menuPrice+"</div>"+
+					"<input type='hidden' class='hiddenMenuId' value="+menuList[i].menuId+"></div>";
+					}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
 				$("#next").off("click");
@@ -327,7 +308,6 @@ body {
 					menuCategory : menuCategory
 				},
 				success:function(menuList){
-				
 				var createTable = ""
 				var Cnt = 1*1;
 				var pageLength = menuList.length/8;
@@ -340,15 +320,17 @@ body {
 						createTable = createTable + "</div>"+
 						"<div id='item_page"+Cnt+"' class='items-wrapper'>";
 					}
-					createTable = createTable + "<div class='item'><img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img><div class='menuImgTagText'>"+menuList[i].menuName+"</div></div>";	
+					createTable = createTable + "<div class='item' onclick='setCartList(this)'>"+
+												"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img>"+
+												"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
+												"<div class='menuImgTagPrice'>"+menuList[i].menuPrice+"</div>"+
+												"<input type='hidden' class='hiddenMenuId' value="+menuList[i].menuId+"></div>";	
 				}
 					createTable = createTable + "</div>";
 				$(".main-panel").html(createTable);
 				$("#next").off("click");
 				$("#pre").off("click");
 				testRegButtons(intPage);
-				//이부분
-
 				}
 			});
 	}
@@ -360,7 +342,29 @@ body {
 		regButtons();
 		testRegButtons(pageNum);
 	});
-
+function setCartList(item){
+	var cartList = $(".order-list").html();
+	
+	var menuName= $(item).children(".menuImgTagText").html();
+	var menuId = $(item).children(".hiddenMenuId").val();
+	var menuPrice = $(item).children(".menuImgTagPrice").html();
+	var orderNo = sessionStorage.getItem("orderNo");
+	
+	$.ajax({
+		url:"setCartList",
+		data:{
+			orderNo: orderNo,
+			menuId : menuId,
+			menuName : menuName,
+			menuPrice : menuPrice
+		},
+		success: function(){
+			console.log('장바구니 등록성공');
+		}
+	});
+	cartList = cartList +menuName;
+	$(".order-list").html(cartList);
+}
 
 </script>
 <body>
@@ -384,9 +388,11 @@ body {
 			<c:set var="divCnt" value="1"></c:set>
 			<div id="item_page${count}" class="items-wrapper">
 				<c:forEach var="list" items="${menuList}">
-					<div class="item">
+					<div class="item" onclick="setCartList(this)">
 						<img class='menuImgTag' src='../img/${list.menuImg}'></img>
-						<div class='menuImgTagText'>${list.menuName }</div>
+						<div class='menuImgTagText'>${list.menuName}</div>
+						<div class='menuImgTagPrice'>${list.menuPrice }</div>
+						<input type="hidden" class="hiddenMenuId" value="${list.menuId}">
 					</div>
 					<input type="hidden" value="${count = count + 1}">
 					<c:choose>
@@ -403,8 +409,8 @@ body {
 		<button class="menuBtn" id="next">></button>
 		<div class="order-table">
 			<div class="order-box">
-				<h4>주문 내역</h4>
-				1955 버거 + 치즈볼 + 콜라<br>
+				주문내역
+        		<div class="order-list"></div>
 
 			</div>
 			<div class="button-area">

@@ -5,7 +5,6 @@ import java.util.List;
 
 import kimhyunki.kiosk.order.domain.Order;
 import kimhyunki.kiosk.serving.service.ServingService;
-import kimhyunki.kiosk.user.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

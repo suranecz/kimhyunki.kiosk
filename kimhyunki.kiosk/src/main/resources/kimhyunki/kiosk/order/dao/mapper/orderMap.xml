@@ -33,4 +33,36 @@
 		where recommend='등록'
 	</select>
 
+	<update id="setCart" parameterType="kimhyunki.kiosk.cart.domain.Cart">
+		insert into 
+		carts(order_no, menu_id, menu_name, menu_price) 
+		values(#{orderNo},#{menuId},#{menuName},#{menuPrice})
+	</update>
+	
+	<select id="getCartList" parameterType="int" resultType="kimhyunki.kiosk.cart.domain.Cart">
+		select order_no orderNo, menu_id menuId, menu_name menuName, menu_price menuPrice, stock
+		from carts
+		where order_no = #{orderNo}
+	</select>
+	
+	<update id="minusStock" parameterType="int">
+	    update carts set stock = stock-1
+    	where menu_id=#{menuId}
+	</update>
+	
+	<update id="plusStock" parameterType="int">
+		update carts set stock = stock+1
+		where menu_id=#{menuId}
+	</update>
+	
+	<select id="getTotalPrice" parameterType="int" resultType="int">
+	    select sum(MENU_PRICE * stock)
+		from carts
+    	where order_no = #{orderNo}
+	</select>
+	
+	<update id="setPoint" parameterType="kimhyunki.kiosk.user.domain.User">
+		update users set point=point+#{point}
+   		where PHONE_NO=#{phoneNo}
+	</update>
 </mapper>

@@ -10,6 +10,8 @@
 <title>main</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
 <style>
 
     @font-face { font-family: '배달의민족 한나는 열한살 TTF';
@@ -78,24 +80,34 @@
   var second=10;
   function time(){
     second--;
-    var text = document.getElementById("second");
-    text.innerHTML=second;
+
+    $("#second").html(second);
     if(second==0){
+    	sessionStorage.clear();
       location.href='../';
     }
   }
   function startTime(){
     setInterval(time,1000);
   }
+  
+  function printOrderNo(){
+	   var orderNo = sessionStorage.getItem("orderNo");
+	   $("#printOrderNo").html(orderNo);
+  }
+  $(document).ready(function(){
+	printOrderNo();
+	startTime();
+  });
 
 </script>
 </head>
-<body onload="startTime()">
+<body>
   <div class="header"><marquee class="ad_text" width="100%">광고 텍스트 영역</marquee></div>
 
 <div class="container">
   <div class="result_header">결제 완료</div>
-  <div class="result_text1">주문번호는 0001번입니다.</div>
+  <div class="result_text1">주문번호는 <span id="printOrderNo"></span>번입니다.</div>
   <div class="result_text2">메뉴가 준비되면</div>
   <div class="result_text3">주문번호가 주문현황판에 출력됩니다</div>
   <div class="result_second"><span id="second">10</span>초 후 초기 화면으로 돌아갑니다</div>

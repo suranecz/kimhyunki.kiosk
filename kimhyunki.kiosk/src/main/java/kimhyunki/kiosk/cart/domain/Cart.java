@@ -1,28 +1,36 @@
 package kimhyunki.kiosk.cart.domain;
 
-import java.util.List;
-
-import kimhyunki.kiosk.menu.domain.Menu;
-import kimhyunki.kiosk.order.domain.Order;
-
 public class Cart {
 	
-	private Order order;
-	private List<Menu> menus;
+	private int orderNo;
+	private int menuId;
+	private String menuName;
+	private int menuPrice;
 	private int stock;
 	
-	
-	public Order getOrder() {
-		return order;
+	public int getOrderNo() {
+		return orderNo;
 	}
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
-	public List<Menu> getMenus() {
-		return menus;
+	public int getMenuId() {
+		return menuId;
 	}
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+	public String getMenuName() {
+		return menuName;
+	}
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+	public int getMenuPrice() {
+		return menuPrice;
+	}
+	public void setMenuPrice(int menuPrice) {
+		this.menuPrice = menuPrice;
 	}
 	public int getStock() {
 		return stock;
@@ -32,6 +40,8 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", order, menus, stock);
+		return String.format("%s %s %s %s %s", orderNo, menuId, menuName, menuPrice, stock);
 	}
+	
+	
 }

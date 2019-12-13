@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -66,7 +67,7 @@ h3 {
 }
 
 .item_name{
-  width:200px;
+  width:400px;
 }
 
 .item_price {
@@ -79,7 +80,7 @@ h3 {
   font-size: 1.2em;
 	border-radius: 10px;
 	background: white;
-  margin-left: 250px;
+  margin-left: 50px;
   margin-right: 20px;
   width:45px;
   height:45px;
@@ -382,6 +383,7 @@ h1{
 var maxPoint=0;
 var usePoint=0;
 var sessionPhoneNo=""+"";
+var sessionOrderNo = sessionStorage.getItem("orderNo");
 
 
 var alert = function(msg, type){
@@ -389,13 +391,14 @@ var alert = function(msg, type){
         title:'',
         text:msg,
         type:type,
-        timer:1000,
+        timer:1500,
         customClass:'sweet-size',
         showConfirmButton:false
     });
 }
 
 var regButtons=function(){
+	
 	$("#minus1").bind("click",function(){
 		var stock = $("#stock_num1").html();
 		if(stock>1){
@@ -409,40 +412,13 @@ var regButtons=function(){
 		$("#stock_num1").html(stock);
 	});
 
-
-	$("#minus2").bind("click",function(){
-		var stock = $("#stock_num2").html();
-		if(stock>1){
-			stock--;
-		}
-		$("#stock_num2").html(stock);
-	});
-	$("#plus2").bind("click",function(){
-		var stock = $("#stock_num2").html();
-		stock++;
-		$("#stock_num2").html(stock);
-	});
-
-
-	$("#minus3").bind("click",function(){
-		var stock = $("#stock_num3").html();
-		if(stock>1){
-			stock--;
-		}
-		$("#stock_num3").html(stock);
-	});
-	$("#plus3").bind("click",function(){
-		var stock = $("#stock_num3").html();
-		stock++;
-		$("#stock_num3").html(stock);
-	});
-
   $("#pointCancleBtn").bind("click",function(){
     $(".point_container").css('display','none');
   });
 
   $("#pointSearchBtn").bind("click",function(){
 	  var phoneNum = $("#hiddenarea").text();
+
 	  if(checkPhoneNo()){
 		  $.ajax({
 			url:"../user/findUser",
@@ -451,6 +427,8 @@ var regButtons=function(){
 			},
 		  	success:function(user){
 		  		maxPoint = user.point;
+		  		var totalPrice=$("#hidden_totalPrice").text();
+		  		
 		  		//조회실패 핸드폰번호입력
 		  		var strPhoneNum = phoneNum.substring(0,3)+"-"+phoneNum.substring(3,7)+"-"+phoneNum.substring(7,11);
 		  		$(".regist_content").html(strPhoneNum);
@@ -461,14 +439,22 @@ var regButtons=function(){
 		        if(pointLeng>3){
 		        	strUsePoint = strUsePoint.substring(0,pointLeng-3)+','+strUsePoint.substring(pointLeng-3,pointLeng);
 		        }
+		        var strTotalPrice =String(totalPrice);
+		        var totalLeng = strTotalPrice.length;
+		        if(totalLeng>3){
+		        	strTotalPrice = strTotalPrice.substring(0,totalLeng-3)+','+strTotalPrice.substring(totalLeng-3,totalLeng);
+		        }
 		  		//포인트사용페이지 입력
 		  		$("#oriPoint").html(strUsePoint);
 		  		$("#hiddenOriPoint").html(user.point);
 		  		$("#searchPhoneNo").html(user.phoneNo);
+		  		if(usePoint<=totalPrice){
 		  		$("#usablePoint").html(strUsePoint);
+		  		}else{
+		  		$("#usablePoint").html(strTotalPrice);
+		  		}
 		  		clearText();
-		  		
-		  		
+
 		  		//조회 성공시 이동할 페이지 정하기
 		  		if($(user).length==1){
 		  	    $(".point_content").css('display','none');
@@ -481,31 +467,21 @@ var regButtons=function(){
 		  	},
 		  	error:function(a,b,errMsg){
 		  		alert('조회실패함','warning');
-		  	}
-			  
+		  	} 
 		  });
-		  
-		  
 	  }else{
 		  alert('핸드폰번호를 확인해주세요','warning');
 	  }
-	 
-    //$(".point_content").css('display','none');
-    //$(".regist_form").css('display','block');
-    //clearText();
   });
 
 	$(".regist_cancle").bind("click",function(){
-
 		$(".point_container").css('display','none');
 		$(".regist_form").css('display','none');
 	});
 
 	/////////////////////////////////////////////////////////////////////
 	$(".regist_ok").bind("click",function(){
-		
 		var regist_phoneNum = $("#hidden_regist_content").html();
-
 		$.ajax({
 			url:"../user/joinUser",
 			data:{
@@ -526,7 +502,23 @@ var regButtons=function(){
 		
 		var addPointPhoneNo = $("#hidden_regist_content").html();
 		sessionStorage.setItem("phoneNo", addPointPhoneNo);
-		alert("결제진행시 결제금액의 10%가 포인트로 적립됩니다!");
+
+		var price = $("#hidden_totalPrice").text();
+		price=price*1;
+		console.log('price값:'+price);
+		var totalPrice = price/10;
+		$.ajax({
+			url:"addPoint",
+			data:{
+				phoneNo: addPointPhoneNo,
+				point : totalPrice
+			},
+			success:function(){
+				console.log('적립성공');
+				alert(totalPrice+"원이 적립되었습니다",'success');
+				setTimeout(function(){location.href='complete';}, 1600);	
+			}
+		});
 	})
 	////////////////////////////////////////////////////////////////////
   $("#base_pointSearchBtn").bind("click",function(){
@@ -537,6 +529,8 @@ var regButtons=function(){
 
   $("#delPoint").bind("click",function(){
       var point = $("#usablePoint").html().replace(",","");
+      var price = $("#hidden_totalPrice").text();
+      
       if((point-500)<0){
         alert("포인트 최소한도입니다",'warning');
       }else{
@@ -558,9 +552,10 @@ var regButtons=function(){
   $("#addPoint").bind("click",function(){
       var point = $("#usablePoint").html().replace(",","");
       point=point*1;
+      var price = $("#hidden_totalPrice").text();
 
-      if(point+500>maxPoint){
-        alert("잔여 포인트를 초과하였습니다",'warning');
+      if(point+500>maxPoint || point+500>price){
+        alert("사용가능 포인트를 초과하였습니다",'warning');
       }else{
         point=point+500;
         usePoint=point;
@@ -586,6 +581,23 @@ var regButtons=function(){
 	  var oriPoint = $("#hiddenOriPoint").text();
 	  var totalPoint = oriPoint - usePoint;
 	  var hiddenPhoneNo = $("#searchPhoneNo").text();
+	  var price = $("#hidden_totalPrice").text();
+		console.log('oriPoint 값:'+oriPoint);
+		console.log('totalPoint 값:'+totalPoint);
+		console.log('hiddenPhoneNo 값:'+hiddenPhoneNo);
+		console.log('price 값:'+price);
+		console.log('usePoint 값:'+usePoint);
+		
+	  price=price*1;
+	  var totalPrice = price-usePoint;
+	  var strTotalPrice = String(totalPrice);
+	  var leng = strTotalPrice.length;
+	  var strPrice="";
+	  if(leng>3){
+	  	strPrice = strTotalPrice.substring(0,leng-3)+','+strTotalPrice.substring(leng-3,leng);
+	  }else{
+		strPrice=strTotalPrice.substring(leng-3,leng);
+	  }
 	 
 	  $.ajax({
 		  url: "../user/usePoint",
@@ -594,7 +606,9 @@ var regButtons=function(){
 			  point : totalPoint
 		  },
 		  success:function(){
-			  alert('적용완료','success');
+
+			 alert(strPrice+'원 결제 완료','success');
+			 setTimeout(function(){location.href='complete';}, 1600);	
 		  },
 		  error:function(a,b,errMsg){
 			  alert(errmsg);
@@ -611,6 +625,7 @@ var regButtons=function(){
 
 $(document).ready(function(){
 	regButtons();
+	writeTotalPrice();
 });
 var originNo="";
 var temp = "";
@@ -678,7 +693,79 @@ function inputNum(text) {
     hiddenarea.innerHTML = originNo;
   }
 }
+function minusStock(orderNo, menuId, count, menuPrice){
+	var presentStock = $("#stock_num"+count).html();
+		presentStock = presentStock*1;
+	var totalPrice = (presentStock-1)*menuPrice;
+	var strTotalPrice = String(totalPrice);
+    var leng = strTotalPrice.length;
+    var strPrice = strTotalPrice.substring(0,leng-3)+','+strTotalPrice.substring(leng-3,leng);
 
+	if(presentStock>=1){
+		$.ajax({
+			url:"minusStock",
+			data:{
+				menuId : menuId
+			},
+			success:function(){
+				console.log('수량 -1 성공');
+				$("#stock_num"+count).html(presentStock-1);
+				$("#item_price"+count).html(totalPrice+'원');
+				$("#totalPrice").html(strPrice);
+				//$("#totalPrice").html(totalPrice);
+
+				selectTotalPrice(orderNo);
+			}
+		});
+	};
+}
+
+function plusStock(orderNo, menuId, count, menuPrice){
+	var presentStock = $("#stock_num"+count).html();
+		presentStock = presentStock*1;
+	var totalPrice = (presentStock+1)*menuPrice;
+		$.ajax({
+			url:"plusStock",
+			data:{
+				menuId : menuId
+			},
+			success:function(){
+				console.log('수량 +1 성공');
+				$("#stock_num"+count).html(presentStock+1);
+				$("#item_price"+count).html(totalPrice+'원');
+				$("#totalPrice").html(totalPrice);
+				selectTotalPrice(orderNo);
+			}
+		});
+}
+
+var selectTotalPrice = function(orderNo){
+	$.ajax({
+		url:"selectTotalPrice",
+		data:{
+			orderNo : orderNo
+		},
+		success: function(totalPrice){
+			var strTotalPrice = String(totalPrice);
+		    var leng = strTotalPrice.length;
+		    var strPrice = strTotalPrice.substring(0,leng-3)+','+strTotalPrice.substring(leng-3,leng);
+			$("#totalMoney").html(strPrice);
+			$("#totalPrice").html(strPrice);
+			$("#hidden_totalPrice").html(totalPrice);
+			//$("#totalMoney").html(totalPrice);
+			//$("#totalPrice").html(totalPrice);
+		}
+	});
+}
+var writeTotalPrice = function(){
+	var totalPrice=${totalPrice};
+	var strTotalPrice = String(totalPrice);
+    var leng = strTotalPrice.length;
+    var strPrice = strTotalPrice.substring(0,leng-3)+','+strTotalPrice.substring(leng-3,leng);
+    $("#totalMoney").html(strPrice);
+	$("#totalPrice").html(strPrice);
+	$("#hidden_totalPrice").html(totalPrice);
+}
 </script>
 <body>
 	<div class="header">
@@ -687,34 +774,19 @@ function inputNum(text) {
 	<div class="logo">로고사진</div>
 	<h2>주문을 확인해주세요</h2>
 	<div class="container">
-		<div class="orderList">
-      <div class="item">
-          <div class="item_name">메뉴이름</div>
-          <div>
-          <input id="minus1" class="minus" type="button" value=" - ">
-          <span  id="stock_num1" class="stock_num">5</span>
-          <input id="plus1" class="plus" type="button" value=" + ">
+	<div class="orderList">
+	<c:set var="count" value="0"></c:set>
+	<c:forEach var="list" items="${cartList}">
+	      <div id="item${count=count+1}" class="item">
+			  <div class="item_name">${list.menuName }</div>
+	          <div>
+	          <input id="minus${count}" class="minus" type="button" value=" - " onclick="minusStock(${list.orderNo},${list.menuId},${count},${list.menuPrice})">
+	          <span  id="stock_num${count}" class="stock_num">${list.stock }</span>
+	          <input id="plus${count}" class="plus" type="button" value=" + " onclick="plusStock(${list.orderNo},${list.menuId},${count},${list.menuPrice})">
+	          </div>
+	          <div id="item_price${count}" class="item_price">${list.menuPrice}원</div>
           </div>
-          <div class="item_price">3,000원</div>
-      </div>
-      <div class="item">
-          <div class="item_name">메뉴이름</div>
-          <div>
-            <input id="minus2" class="minus" type="button" value=" - ">
-            <span  id="stock_num2" class="stock_num">4</span>
-            <input id="plus2" class="plus" type="button" value=" + ">
-          </div>
-          <div class="item_price">12,000원</div>
-      </div>
-      <div class="item">
-          <div class="item_name">메뉴이름</div>
-          <div>
-            <input id="minus3" class="minus" type="button" value=" - ">
-            <span  id="stock_num3" class="stock_num">2</span>
-            <input id="plus3" class="plus" type="button" value=" + ">
-          </div>
-          <div class="item_price">8,000원</div>
-      </div>
+	</c:forEach>
 		</div>
 	</div>
   <div class="point_container">
@@ -757,7 +829,7 @@ function inputNum(text) {
 <input type="hidden" id="searchPhoneNo">
       잔여 포인트 : <span id="oriPoint"></span>p<br><br>
       <input type="hidden" id="hiddenOriPoint">
-      주문 금액 : <span id="totalPrice">23,000</span>원<br><br>
+      주문 금액 : <span id="totalPrice"></span>원<br><br>
       <input type="hidden" id="hidden_totalPrice">
       사용 포인트: <span id="usablePoint"></span>p<br><br>
       <input id="delPoint" class="point_result_content_btn" type="button" value="-500p">
@@ -789,7 +861,7 @@ function inputNum(text) {
     </div>
   </div>
   <div class="total_price_container">
-    합계 : 23,000원
+    합계 : <span id ="totalMoney"></span>원
   </div>
   <div class="bottom_btn">
     <button id="base_backBtn" class="base_Btn" onclick="location.href='menu'">돌아가기</button>
