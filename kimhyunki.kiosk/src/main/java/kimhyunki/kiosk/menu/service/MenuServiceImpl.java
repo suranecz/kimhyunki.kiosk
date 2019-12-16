@@ -36,4 +36,14 @@ public class MenuServiceImpl implements MenuService{
 	public boolean addMenu(Menu menu) {
 		return menuDao.insertMenu(menu)>0;
 	}
+
+	@Override
+	public boolean chageMenuName(Menu menu) {
+		return menuDao.setCustomName(menu)>0;
+	}
+
+	@Override
+	public List<Menu> resourceList() {
+		return menuDao.getResourceList();
+	}
 }

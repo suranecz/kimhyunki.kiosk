@@ -52,6 +52,12 @@ public class OrderController {
 		return menuList;
 	}
 	
+	@RequestMapping("secedeOrder")
+	@ResponseBody
+	public boolean secedeOrder(int orderNo){
+		return orderService.secedeOrder(orderNo);
+	}
+	
 	@RequestMapping("recommendMenuList")
 	@ResponseBody
 	public List<Menu> recommendMenuList(){

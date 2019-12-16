@@ -70,4 +70,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.updateOrderStauts(orderNo)>0;
 	}
 
+	@Override
+	public boolean secedeOrder(int orderNo) {
+		return orderDao.deleteOrder(orderNo)>0;
+	}
+
 }

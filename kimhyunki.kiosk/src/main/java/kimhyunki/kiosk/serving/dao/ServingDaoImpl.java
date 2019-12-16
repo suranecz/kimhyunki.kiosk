@@ -28,4 +28,8 @@ public class ServingDaoImpl implements ServingDao{
    public int updateStatus(Order order) {
       return servingMapper.updateStatus(order);
    }
+	@Override
+	public List<Order> getOrderList() {
+		return servingMapper.getOrderList();
+	}
 }

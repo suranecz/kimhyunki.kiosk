@@ -130,6 +130,9 @@ display: none;
 .item:hover{
 transform: scale(1.04);
 }
+.hiddenOrderList{
+	display: none;
+}
 
 .making-box{
   width:1000px;
@@ -239,6 +242,46 @@ var totalPage = parseInt(totalPage_float);
 var page = 1 * 1;
 var sessionOrderNo = sessionStorage.getItem("orderNo");
 var burgerCnt=0;
+var cartTotalPrice=0*1;
+var menuNameList ="";
+
+
+function orderCustomBurger(){
+	//cartTotalPrice
+	var orderNo = sessionOrderNo;
+	var menuList = $(".hiddenOrderList").html();
+	var menuLeng = menuList.length;
+	menuList = menuList.sbustr(0,menuLeng-1);
+	var menuName= "커스텀("+menuList+")";
+	var totalPrice = $(".total-price").html();
+	var len =totalPrice.length;
+	totalPrice=totalPrice.substr(0,len-1);
+	$.ajax({
+		url:"../menu/changeMenuName",
+		data:{
+			menuName : menuName,
+			menuPrice : totalPrice
+		},
+		success:function(){
+			console.log(menuName+"으로 변경 성공");
+ 			$.ajax({
+				url:"setCartList",
+				data:{
+					orderNo : orderNo,
+					menuId : 2000,
+					menuName : menuName,
+					menuPrice : totalPrice
+				},
+				success:function(){
+					console.log(orderNo+'번 회원 커스텀햄버거 장바구니 추가 성공');
+					location.href='menu';
+				}
+			});
+		}
+	});
+	
+}
+
 
 var alert = function(msg, type){
     swal({
@@ -307,8 +350,19 @@ var testRegButtons = function(pageNum){
 		      alert('더 이상 재료를 추가 할 수 없습니다!','warning');
 		    }else{
 		    	var imgName = $(this).children(".hiddenMenuImg").val();
+		    	var menuPrice = $(this).children(".hiddenMenuPrice").val();
+		    	var menuName = $(this).children(".menuImgTagText").html();
 		    	var makingBurger ="";
+		    	var itemList = "<div class='cartList'>"+menuName+"("+menuPrice+"원)</div>";
 		    	
+		    	menuNameList = menuNameList + menuName+"+";
+		    	menuPrice=menuPrice*1;
+		    	cartTotalPrice=cartTotalPrice+menuPrice;
+		    	var won = cartTotalPrice+"원";
+		    	
+		    	
+		    	$(".total-price").html(won);
+		    	$(".hiddenOrderList").html(menuNameList);
 		    	if(imgName=='패티.png'){
 		    		console.log('패티맞음');
 		    	   makingBurger =  "<div id='burger-item"+burgerCnt+"' class='burger-item'>"+
@@ -328,6 +382,7 @@ var testRegButtons = function(pageNum){
 				 				"</div>";
 		    	}
 		    	$(".making-box").append(makingBurger);
+		    	$(".item_list").append(itemList);
 		        $("#burger-item"+burgerCnt).css('bottom',7+6*burgerCnt+'%');
 		        $("#burger-item"+burgerCnt).css('display','block');
 		    	burgerCnt++;
@@ -357,6 +412,7 @@ var getMenuList = function(menuCategory){
 				createTable = createTable + "<div class='item'>"+
 											"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"' style='width:100%; height:80%;'></img>"+
 											"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
+											"<input type='hidden' class='hiddenMenuPrice' value='"+menuList[i].menuPrice+"'>"+
 											"<input class='hiddenMenuImg' type='hidden' value='"+menuList[i].menuImg+"'>"+
 											"</div>";	
 			}
@@ -410,6 +466,7 @@ $(document).ready(function(){
 				<div class="item">
 					<img class='menuImgTag' src='../img/${list.menuImg}' style="width:100%; height: 80%;"></img>
 					<div class='menuImgTagText'>${list.menuName }</div>
+					<input type='hidden' class='hiddenMenuPrice' value='${list.menuPrice }'>
 					<input class='hiddenMenuImg' type='hidden' value='${list.menuImg }'>
 				</div>
 											
@@ -435,21 +492,15 @@ $(document).ready(function(){
   <div class="order-box">
     <div class="order-box-header">주문 내역</div>
       <div class="item_list">
-        <div class="items" id="item1">오트밀</div>
-        <div class="items" id="item2">소고기 패티</div>
-        <div class="items" id="item3">소고기 패티</div>
-        <div class="items" id="item4">양상추</div>
-        <div class="items" id="item5">토마토</div>
-        <div class="items" id="item6">피클</div>
-        <div class="items" id="item7">올리브</div>
 
     </div>
-    <div class="total-price">${menuList.size()}6,500원</div>
+    <div class="total-price"></div>
+    <div class="hiddenOrderList"></div>
   	
   </div>
   <div class="button-area">
     <div class="btn" onclick="location.href='menu'">주문 취소</div>
-    <div class="btn" onclick="location.href='menu'">주문하기</div>
+    <div class="btn" onclick="orderCustomBurger()">주문하기</div>
   </div>
     <div class="footer"></div>
 </body>

@@ -30,6 +30,12 @@ public class MenuController {
 
 	}
 	
+	@RequestMapping("/resourceList")
+	@ResponseBody
+	public List<Menu> resourceList(){
+		return menuService.resourceList();
+	}
+	
 	@RequestMapping("/menuList")
 	@ResponseBody
 	public List<Menu> menuList(String menuCategory){
@@ -39,6 +45,15 @@ public class MenuController {
 	@RequestMapping("/addMenu")
 	public void addMenu(){
 		
+	}
+	
+	@RequestMapping("/changeMenuName")
+	@ResponseBody
+	public boolean changeMenuName(String menuName, int menuPrice){
+		Menu menu = new Menu();
+		menu.setMenuName(menuName);
+		menu.setMenuPrice(menuPrice);
+		return menuService.chageMenuName(menu);
 	}
 	
 	@RequestMapping("/correctMenu")

@@ -19,5 +19,5 @@ public interface OrderService {
 	int selectTotalPrice(int orderNo);
 	boolean addPoint(User user);
 	boolean adjustOrderStatus(int orderNo);
-	
+	boolean secedeOrder(int orderNo);
 }

@@ -13,6 +13,13 @@
 		from menus
 		where menu_category=#{menuCategory}
 	</select>
+	
+	<select id="getResourceList" resultMap="getMenuListMap">
+ 		select *
+		from menus
+		where menu_category='빵' or menu_category='야채' 
+    	or menu_category='해산물' or menu_category='기타' or menu_category='패티'
+	</select>
 	<resultMap type="menu" id="getMenuListMap">
 		<id column="menu_id" property="menuId"/>
 		<result column="menu_name" property="menuName" />
@@ -27,6 +34,11 @@
 		from menus
 		where menu_id=#{menuId}
 	</select>
+	
+	<update id="setCustomName" parameterType="menu">
+		update menus set menu_name=#{menuName}, menu_price=#{menuPrice}
+		where menu_id=2000
+	</update>
 	
 	<update id="setMenu" parameterType="menu">
 		update menus

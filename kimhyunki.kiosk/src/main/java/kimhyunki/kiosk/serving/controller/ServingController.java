@@ -20,7 +20,7 @@ public class ServingController {
    
    @RequestMapping("orderManage")
    public String servingList(Model model){
-      model.addAttribute("orderList", servingService.orderList());
+      model.addAttribute("orderList", servingService.getOrderList());
       return "serving/orderManage";
    }
    

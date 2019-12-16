@@ -9,4 +9,6 @@ public interface ServingService {
    List<Order> prepared();
    List<Order> orderList();
    int updateStatus(Order order);
+   List<Order> getOrderList();
+
 }

@@ -19,4 +19,5 @@ public interface OrderMapper {
 	int getTotalPrice(int orderNo);
 	int setPoint(User user);
 	int updateOrderStauts(int orderNo);
+	int deleteOrder(int orderNo);
 }

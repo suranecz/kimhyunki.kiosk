@@ -69,5 +69,10 @@ public class OrderDaoImpl implements OrderDao{
 	public int updateOrderStauts(int orderNo) {
 		return orderMapper.updateOrderStauts(orderNo);
 	}
+
+	@Override
+	public int deleteOrder(int orderNo) {
+		return orderMapper.deleteOrder(orderNo);
+	}
 	
 }

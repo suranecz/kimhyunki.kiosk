@@ -12,7 +12,6 @@
 <style>
     body{
       margin : 0;
-      overflow: auto;
     }
     .footer {
       position: fixed;
@@ -40,16 +39,20 @@
       background-color: #ffffff;
       background-color: rgba( 255, 255, 255, 0.5 );
     }
-    .addbutton{ /* 추가하기 버튼 */
-      position:absolute;
-      margin-top: 1.5%;
-      right: %;
-      border-radius: 10px;
-      background-color: #ffffff;
-      background-color: rgba( 255, 255, 255, 0.5 );
-      width: 7%;
-      height: 5%;
-      font-size:20px;
+
+    .container{
+      text-align : center;
+      background-color: rgb(17,65,15);
+      font-family: '배달의민족 한나는 열한살 TTF';
+      padding-right: 0;
+      padding-left: 0;
+      border-radius: 15px 15px 15px 15px;
+      width: 95%;
+      height: 790px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: initial;
+      overflow: auto;
     }
     table {
       border-collapse: separate;
@@ -202,9 +205,9 @@ $(document).ready(function(){
 <div>
   <table id = "orderTable">
     <colgroup>
-      <col width = "10%" />
+      <col width = "8%" />
       <col width = "65%" />
-      <col width = "15%" />
+      <col width = "8%" />
     </colgroup>
     <thead>
       <th>주문번호</th>
@@ -215,7 +218,7 @@ $(document).ready(function(){
      <c:forEach var="list" items="${orderList}">
       <tr>
         <td>${list.orderNo}</td>
-        <td>메뉴리스트</td>
+        <td>${list.place }</td>
         <td><button class="status_Btn" value="${list.orderNo}">${list.orderStatus}</button></td>
       </tr>
      </c:forEach>

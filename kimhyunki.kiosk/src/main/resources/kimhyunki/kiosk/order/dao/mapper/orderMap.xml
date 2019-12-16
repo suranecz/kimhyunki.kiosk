@@ -33,11 +33,12 @@
 		where recommend='등록'
 	</select>
 
-	<update id="setCart" parameterType="kimhyunki.kiosk.cart.domain.Cart">
+	<insert id="setCart" parameterType="kimhyunki.kiosk.cart.domain.Cart">
 		insert into 
 		carts(order_no, menu_id, menu_name, menu_price) 
 		values(#{orderNo},#{menuId},#{menuName},#{menuPrice})
-	</update>
+	</insert>
+	
 	
 	<select id="getCartList" parameterType="int" resultType="kimhyunki.kiosk.cart.domain.Cart">
 		select order_no orderNo, menu_id menuId, menu_name menuName, menu_price menuPrice, stock
@@ -65,6 +66,11 @@
 		update users set point=point+#{point}
    		where PHONE_NO=#{phoneNo}
 	</update>
+	
+	<delete id="deleteOrder" parameterType="int">
+		delete from orders
+		where order_no=#{orderNo}
+	</delete>
 	
 	<update id="updateOrderStauts" parameterType="int">
 		update orders set order_status='준비중'

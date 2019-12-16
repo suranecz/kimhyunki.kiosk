@@ -28,4 +28,8 @@ public class ServingServiceImpl implements ServingService{
    public int updateStatus(Order order) {
      return servingDao.updateStatus(order);
    }
+	@Override
+	public List<Order> getOrderList() {
+		return servingDao.getOrderList();
+	}
 }

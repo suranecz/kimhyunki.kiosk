@@ -103,7 +103,7 @@ body {
 .items-wrapper {
 	margin: 0 auto;
 	display: grid;
-	width: 850px;
+	width: 1050px;
 	height: 450px;
 	grid-template-columns: 25% 25% 25% 25%;
 	grid-template-rows: 50% 50%;
@@ -118,14 +118,14 @@ body {
 }
 
 .item {
-	background-color: ivory;
+
 	margin: 10px;
-	border: 1px solid black;
+
 	transition: 0.2s;
 }
 
 .item:hover {
-	transform: scale(1.04);
+	transform: scale(1.07);
 }
 
 .order-table {
@@ -160,13 +160,13 @@ body {
 
 #next {
 	position: fixed;
-	right: -80px;
+	right: -150px;
 	top: 35%;
 }
 
 #pre {
 	position: fixed;
-	left: -80px;
+	left: -150px;
 	top: 35%;
 }
 
@@ -194,8 +194,17 @@ body {
 
 .menuImgTagText {
 	text-align: center;
-	font-size: 1.3em;
+	font-size: 1.2em;
+	width:130%;
+	margin-left:-15%;
 	margin-top: -8px;
+	font-weight:bold;
+}
+.menuImgTagPrice{
+	text-align: center;
+	font-weight:bold;
+	font-size: 1.2em;
+	
 }
 
 .menuImgTag {
@@ -211,6 +220,20 @@ body {
 	var page = 1 * 1;
 	var sessionOrderNo = sessionStorage.getItem("orderNo");
 
+	
+	function cancleOrder(){
+		$.ajax({
+			url:"secedeOrder",
+			data:{
+				orderNo: sessionOrderNo
+			},
+			success:function(){
+				console.log(sessionOrderNo+"번 주문 취소");
+				location.href='../';
+			}
+		});
+	}
+	
 	var testRegButtons = function(menuNum){
 		page=1*1;
 		totalPage = parseInt(menuNum/8);
@@ -286,7 +309,7 @@ body {
 					createTable = createTable + "<div class='item' onclick='setCartList(this)'>"+
 					"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img>"+
 					"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
-					"<div class='menuImgTagPrice'>"+menuList[i].menuPrice+"</div>"+
+					"<div class='menuImgTagPrice'>₩ "+menuList[i].menuPrice+"원</div>"+
 					"<input type='hidden' class='hiddenMenuId' value="+menuList[i].menuId+"></div>";
 					}
 					createTable = createTable + "</div>";
@@ -323,7 +346,7 @@ body {
 					createTable = createTable + "<div class='item' onclick='setCartList(this)'>"+
 												"<img class='menuImgTag' src='../img/"+menuList[i].menuImg+"'></img>"+
 												"<div class='menuImgTagText'>"+menuList[i].menuName+"</div>"+
-												"<div class='menuImgTagPrice'>"+menuList[i].menuPrice+"</div>"+
+												"<div class='menuImgTagPrice'>₩ "+menuList[i].menuPrice+"원</div>"+
 												"<input type='hidden' class='hiddenMenuId' value="+menuList[i].menuId+"></div>";	
 				}
 					createTable = createTable + "</div>";
@@ -348,6 +371,12 @@ function setCartList(item){
 	var menuName= $(item).children(".menuImgTagText").html();
 	var menuId = $(item).children(".hiddenMenuId").val();
 	var menuPrice = $(item).children(".menuImgTagPrice").html();
+	
+	var strMenuPrice =menuPrice+"";
+	var len = strMenuPrice.length;
+	strMenuPrice= strMenuPrice.substr(2,len-1);
+	menuPrice=parseInt(strMenuPrice);
+
 	var orderNo = sessionStorage.getItem("orderNo");
 	
 	$.ajax({
@@ -391,7 +420,7 @@ function setCartList(item){
 					<div class="item" onclick="setCartList(this)">
 						<img class='menuImgTag' src='../img/${list.menuImg}'></img>
 						<div class='menuImgTagText'>${list.menuName}</div>
-						<div class='menuImgTagPrice'>${list.menuPrice }</div>
+						<div class='menuImgTagPrice'>₩ ${list.menuPrice }원</div>
 						<input type="hidden" class="hiddenMenuId" value="${list.menuId}">
 					</div>
 					<input type="hidden" value="${count = count + 1}">
@@ -414,7 +443,7 @@ function setCartList(item){
 
 			</div>
 			<div class="button-area">
-				<div class="btn" onclick="location.href='../'">주문 취소</div>
+				<div class="btn" id="cancleOrder()">주문 취소</div>
 				<div class="btn" onclick="location.href='checkOrder'">주문하기</div>
 			</div>
 		</div>

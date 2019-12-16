@@ -29,4 +29,12 @@
       set order_status = #{orderStatus}
       where order_no = #{orderNo}
    </update>
+   
+   <select id="getOrderList" resultType="order">
+	  select orders.order_no orderNo, listagg(concat(concat(carts.menu_name,'-'),carts.stock), ',') within group(order by orders.order_no desc) as place,orders.ORDER_STATUS orderStatus
+	  from orders join carts
+	  on orders.order_no = carts.order_no
+	  where orders.ORDER_STATUS = '준비중' or orders.ORDER_STATUS='준비완료' or orders.order_status='주문완료'
+	  group by orders.order_no, orders.ORDER_STATUS
+   </select>
 </mapper>

@@ -37,5 +37,16 @@ public class MenuDaoImpl implements MenuDao{
 		return menuMapper.insertMenu(menu);
 	}
 
+	@Override
+	public int setCustomName(Menu menu) {
+		return menuMapper.setCustomName(menu);
+	}
+
+	@Override
+	public List<Menu> getResourceList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
