@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import kimhyunki.kiosk.cart.domain.Cart;
+import kimhyunki.kiosk.logo.service.LogoService;
 import kimhyunki.kiosk.menu.domain.Menu;
 import kimhyunki.kiosk.order.domain.Order;
 import kimhyunki.kiosk.order.service.OrderService;
-import kimhyunki.kiosk.user.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/order")
 public class OrderController {
 	@Autowired private OrderService orderService;
-
+	@Autowired private LogoService logoService;
+	
 	@RequestMapping("selectPlace")
 	public void selectPlace(){
-		
 	}
 	
 	@RequestMapping("addPlace")
@@ -49,13 +48,6 @@ public class OrderController {
 		model.addAttribute("menuList", orderService.recommendMenuList());
 		model.addAttribute("logoImg", logoService.getLogo());
 	}
-
-	
-	@RequestMapping("secedeOrder")
-	@ResponseBody
-	public boolean secedeOrder(int orderNo){
-		return orderService.secedeOrder(orderNo);
-	}
 	
 	@RequestMapping("recommendMenuList")
 	@ResponseBody
@@ -64,12 +56,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping("custom")
-	@ModelAttribute("menuList")
-	public List<Menu> customhamberger(String menuCategory){
-		List<Menu> menuList = new ArrayList<Menu>();
+	public void customhamberger(Model model, String menuCategory){
 		String start="빵";
-		menuList = orderService.getMeterial(start);
-		return menuList;
+		model.addAttribute("menuList", orderService.getMeterial(start));
+		model.addAttribute("logoImg", logoService.getLogo());
 	}
 	
 	@RequestMapping("customWithAjax")
@@ -78,54 +68,11 @@ public class OrderController {
 		return orderService.getMeterial(menuCategory);
 	}
 	
-	@RequestMapping("setCartList")
-	@ResponseBody
-	public boolean setCartList(Cart cart){
-		return orderService.addCart(cart);
-	}
-	
 	@RequestMapping("checkOrder")
-	public void orderCheck(HttpSession session, Model model){
-		List<Cart> cartList = new ArrayList<Cart>();
-		int orderNo = (int) session.getAttribute("orderNo");
-		cartList = orderService.CartList(orderNo);
-		model.addAttribute("cartList", cartList);
-		model.addAttribute("totalPrice", orderService.selectTotalPrice(orderNo));
-	}
-	   
-	@RequestMapping("minusStock")
-	@ResponseBody
-	public boolean minusStock(int menuId){
-		return orderService.delStock(menuId);
+	public void orderCheck(){
 	}
 	
-	@RequestMapping("plusStock")
-	@ResponseBody
-	public boolean plusStock(int menuId){
-		return orderService.addStock(menuId);
-	}
-	
-	@RequestMapping("selectTotalPrice")
-	@ResponseBody
-	public int selectTotalPrice(int orderNo){
-		return orderService.selectTotalPrice(orderNo);
-	}
-	
-	@RequestMapping("addPoint")
-	@ResponseBody
-	public boolean addPoint(User user){
-		return orderService.addPoint(user);
-	}
-
 	@RequestMapping("complete")
-	public void payment(HttpSession session){
-		session.invalidate();
+	public void payment(){
 	}
-	
-	@RequestMapping("adjustOrderStatus")
-	@ResponseBody
-	public boolean adjustOrderStatus(int orderNo){
-		return orderService.adjustOrderStatus(orderNo);
-	}
-	
 }
