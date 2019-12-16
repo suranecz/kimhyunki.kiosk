@@ -14,5 +14,10 @@ public class LoginServiceImpl implements LoginService{
 	public Login idCheck(int password) {
 		return loginDao.login(password);
 	}
+	
+	@Override
+	public boolean addLogo(String logoImg) {
+		return loginDao.insertLogo(logoImg)>0;
+	}
 
 }
