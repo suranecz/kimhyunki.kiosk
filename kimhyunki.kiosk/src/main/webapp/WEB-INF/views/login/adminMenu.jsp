@@ -87,7 +87,7 @@
            background-color: green;
            transition: transform .2s;
            border-radius: 15px 15px 15px 15px;
-           width: 25%;
+           width: 20%;
            height: 580px;
            text-align: center;
            position:relative;
@@ -126,6 +126,13 @@
           사진
         <br><br><br><br><br>
         <h5>주문현황</h5>
+      </div></a>
+      &nbsp;&nbsp;&nbsp;
+      <a href='../login/imgManage'><div class="zoom">
+        <br><br><br><br>
+          사진
+        <br><br><br><br><br>
+        <h5>사진관리</h5>
       </div></a>
   <br><br><br>
 <h5 font-style = "배달의민족 을지로체 TTF">원하는 메뉴를 선택하세요</h5>
