@@ -4,4 +4,5 @@ import kimhyunki.kiosk.login.domain.Login;
 
 public interface LoginMapper {
 	Login login(int password);
+	int insertLogo(String logoImg);
 }
