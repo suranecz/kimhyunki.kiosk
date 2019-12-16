@@ -45,12 +45,11 @@ public class OrderController {
 	}
 	
 	@RequestMapping("menu")
-	@ModelAttribute("menuList")
-	public List<Menu> mainMenu(){
-		List<Menu> menuList = new ArrayList<Menu>();
-		menuList = orderService.recommendMenuList();
-		return menuList;
+	public void mainMenu(Model model){
+		model.addAttribute("menuList", orderService.recommendMenuList());
+		model.addAttribute("logoImg", logoService.getLogo());
 	}
+
 	
 	@RequestMapping("secedeOrder")
 	@ResponseBody
