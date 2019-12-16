@@ -32,7 +32,10 @@ body {
 	margin-top: 30px;
 	margin-left: 30px;
 }
-
+.logoImg{
+	width: 100%;
+	height: 100%
+}
 .container {
 	width: 800px;
 	height: 800px;
@@ -400,7 +403,9 @@ function setCartList(item){
 	<div class="header">
 		<marquee class="ad_text" width="100%">광고 텍스트 영역</marquee>
 	</div>
-	<div class="logo">로고사진</div>
+	<div class="logo">
+		<img class='logoImg' src='../img/${logoImg}'></img>
+   	</div>
 	<div class="container">
 		<div class="top-nav">
 			<ul>
