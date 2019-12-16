@@ -5,4 +5,7 @@
   <select id="login" resultType="login" parameterType="int">
   	select password from admins where password=#{password}
   </select>
+  <insert parameterType="logo" id="insertLogo">insert into logos(logo_no, logo_img)
+        values((select nvl(max(logo_no),0)+1 from logos),#{logoImg})
+   </insert>
 </mapper>
