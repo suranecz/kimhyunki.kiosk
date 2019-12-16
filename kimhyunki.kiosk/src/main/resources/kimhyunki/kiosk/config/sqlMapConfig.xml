@@ -8,5 +8,6 @@
         <package name="kimhyunki.kiosk.order.domain"/>
         <package name="kimhyunki.kiosk.serving.domain"/>
         <package name="kimhyunki.kiosk.user.domain"/>
+        <package name="kimhyunki.kiosk.logo.domain"/>
     </typeAliases>
 </configuration>
