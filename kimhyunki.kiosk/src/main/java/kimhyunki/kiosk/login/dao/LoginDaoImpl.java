@@ -16,4 +16,9 @@ public class LoginDaoImpl implements LoginDao{
 		return loginMapper.login(password);
 	}
 
+	@Override
+	public int insertLogo(String logoImg) {
+		return loginMapper.insertLogo(logoImg);
+	}
+
 }
